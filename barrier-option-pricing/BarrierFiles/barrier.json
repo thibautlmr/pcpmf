@@ -1,0 +1,16 @@
+{
+	"option size": 5,
+	"strike": 100, 
+	"spot": [50, 40, 60, 55, 45],
+	"maturity": 2,
+	"volatility": [0.2, 0.3, 0.3, 0.3, 0.2],
+	"interest rate": 0.05,
+	"correlation": 0.2,
+	"option type": "barrier",
+	"payoff coefficients": [0.4, 0.4, 0.4, 0.4, 0.4],
+	"upper barrier": [90, 90, 105, 90, 90],
+	"lower barrier": [30, 0, 35, 15, 0],
+	"timestep number": 24,
+	"sample number": 100000
+}
+
