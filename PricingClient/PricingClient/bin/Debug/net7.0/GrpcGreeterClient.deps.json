@@ -1,0 +1,118 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "GrpcGreeterClient/1.0.0": {
+        "dependencies": {
+          "Google.Protobuf": "3.25.1",
+          "Grpc.Net.Client": "2.60.0-pre1",
+          "Grpc.Tools": "2.60.0"
+        },
+        "runtime": {
+          "GrpcGreeterClient.dll": {}
+        }
+      },
+      "Google.Protobuf/3.25.1": {
+        "runtime": {
+          "lib/net5.0/Google.Protobuf.dll": {
+            "assemblyVersion": "3.25.1.0",
+            "fileVersion": "3.25.1.0"
+          }
+        }
+      },
+      "Grpc.Core.Api/2.60.0-pre1": {
+        "runtime": {
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.60.0.0"
+          }
+        }
+      },
+      "Grpc.Net.Client/2.60.0-pre1": {
+        "dependencies": {
+          "Grpc.Net.Common": "2.60.0-pre1",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Grpc.Net.Client.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.60.0.0"
+          }
+        }
+      },
+      "Grpc.Net.Common/2.60.0-pre1": {
+        "dependencies": {
+          "Grpc.Core.Api": "2.60.0-pre1"
+        },
+        "runtime": {
+          "lib/net7.0/Grpc.Net.Common.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.60.0.0"
+          }
+        }
+      },
+      "Grpc.Tools/2.60.0": {},
+      "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GrpcGreeterClient/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.Protobuf/3.25.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Sw9bq4hOD+AaS3RrnmP5IT25cyZ/T1qpM0e8+G+23Nojhv7+ScJFPEAQo1m4EFQWhXoI4FRZDrK+wjHCPw9yxg==",
+      "path": "google.protobuf/3.25.1",
+      "hashPath": "google.protobuf.3.25.1.nupkg.sha512"
+    },
+    "Grpc.Core.Api/2.60.0-pre1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-feOOlUEYV4sK7eEOpQG7RJYw6ScnbAuJFJ6cKJlfGEBRNhRZa2FHWgKPwkK+VT4ylpKw1u1+qkinlrYgNdd9cQ==",
+      "path": "grpc.core.api/2.60.0-pre1",
+      "hashPath": "grpc.core.api.2.60.0-pre1.nupkg.sha512"
+    },
+    "Grpc.Net.Client/2.60.0-pre1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JTkkuXA7OxsYPb+iQwy1/rMGAMo01lCjGBHjUT5+8XXFStat/5A9C/7NFDrM1GhnbGKXys7N9XhQHd0ZyeE6NA==",
+      "path": "grpc.net.client/2.60.0-pre1",
+      "hashPath": "grpc.net.client.2.60.0-pre1.nupkg.sha512"
+    },
+    "Grpc.Net.Common/2.60.0-pre1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2KlH2yir0Ik8jAHYnQshdnLYelS/46j+OHtaZkmOkqWx9p+urBaQ/MNzUnFIksAXlC+E9AM8fOcEAZX5xx8Xyg==",
+      "path": "grpc.net.common/2.60.0-pre1",
+      "hashPath": "grpc.net.common.2.60.0-pre1.nupkg.sha512"
+    },
+    "Grpc.Tools/2.60.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gX2YT08W+4eM25T+ypdbrena91iqz1QywTseu4wVEfYEFpUWbb3G7tDCNU4Fb2D01SS+EipjmRRfXx/BWryrvA==",
+      "path": "grpc.tools/2.60.0",
+      "hashPath": "grpc.tools.2.60.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.0",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+    }
+  }
+}
