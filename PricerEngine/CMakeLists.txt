@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.15)
 
 project(PricerEngine C CXX)
 
@@ -10,9 +10,8 @@ endif ()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 # Find Protobuf installation
-# Looks for protobuf-config.cmake file installed by Protobuf's cmake installation.
-set(protobuf_MODULE_COMPATIBLE TRUE)
-find_package(Protobuf REQUIRED)
+# Must use the CONFIG mode
+find_package(Protobuf REQUIRED CONFIG)
 message(STATUS "Using protobuf ${Protobuf_VERSION}")
 
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
@@ -92,5 +91,3 @@ target_link_libraries(test_json_reader
     nlohmann_json::nlohmann_json
 )
 pnl_add_postbuild(test_json_reader)
-
-
