@@ -1,0 +1,5 @@
+C:/Users/lamur/Documents/3aif/pcpmf/pcpmf-project/build2/CMakeFiles/pricer_grpc_proto.dir
+C:/Users/lamur/Documents/3aif/pcpmf/pcpmf-project/build2/CMakeFiles/pricing_server.dir
+C:/Users/lamur/Documents/3aif/pcpmf/pcpmf-project/build2/CMakeFiles/test_json_reader.dir
+C:/Users/lamur/Documents/3aif/pcpmf/pcpmf-project/build2/CMakeFiles/ALL_BUILD.dir
+C:/Users/lamur/Documents/3aif/pcpmf/pcpmf-project/build2/CMakeFiles/ZERO_CHECK.dir

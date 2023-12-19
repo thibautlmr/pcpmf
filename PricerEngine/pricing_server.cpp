@@ -97,6 +97,15 @@ void RunServer(nlohmann::json &jsonParams) {
     std::unique_ptr<Server> server(builder.BuildAndStart());
     std::cout << "Server listening on " << server_address << std::endl;
 
+    // Test Thibaut Début
+    PnlMat *past = pnl_mat_create(1, 1);
+    double price, priceStdDev;
+    PnlVect *delta, *deltaStdDev;
+    pricer.priceAndDeltas(past, 0., false, price, priceStdDev, delta, deltaStdDev);
+
+    // Test Thibaut Fin
+
+
     // Wait for the server to shutdown. Note that some other thread must be
     // responsible for shutting down the server for this call to ever return.
     server->Wait();

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\PricerEngine\json_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\PricerEngine\test_json_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\PricerEngine\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="C:\Users\lamur\vcpkg\installed\x64-windows\share\nlohmann_json\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6F12A8F4-C00D-30F5-AFC1-8F0435ECC5A2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

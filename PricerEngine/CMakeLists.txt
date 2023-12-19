@@ -74,7 +74,7 @@ target_link_libraries(pricer_grpc_proto
     ${_PROTOBUF_LIBPROTOBUF}
 )
 
-add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp )
+add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp Option.cpp BlackScholesModel.cpp JsonReaderUtils.cpp Option.cpp MonteCarlo.cpp VanillaOption.cpp)
 target_link_libraries(pricing_server
     pricer_grpc_proto
     ${_REFLECTION}
@@ -91,9 +91,3 @@ target_link_libraries(test_json_reader
     nlohmann_json::nlohmann_json
 )
 pnl_add_postbuild(test_json_reader)
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 8738eb71806d97f25238f4c3aba47f6c652412ad

@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "CsvHelper/30.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/CsvHelper.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Google.Protobuf/3.25.1": {
         "type": "package",
         "compile": {
@@ -61,6 +74,26 @@
           }
         }
       },
+      "Grpc.Tools/2.59.0": {
+        "type": "package",
+        "build": {
+          "build/Grpc.Tools.props": {},
+          "build/Grpc.Tools.targets": {}
+        }
+      },
+      "MathNet.Numerics/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
         "type": "package",
         "compile": {
@@ -75,6 +108,23 @@
         },
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
+        }
+      },
+      "MultiCashFlow.Common/1.0.1.1": {
+        "type": "package",
+        "dependencies": {
+          "CsvHelper": "30.0.1",
+          "MathNet.Numerics": "5.0.0"
+        },
+        "compile": {
+          "lib/net6.0/MultiCashFlow.Common.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/MultiCashFlow.Common.dll": {
+            "related": ".xml"
+          }
         }
       },
       "PricingClient/1.0.0": {
@@ -94,6 +144,30 @@
     }
   },
   "libraries": {
+    "CsvHelper/30.0.1": {
+      "sha512": "rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg==",
+      "type": "package",
+      "path": "csvhelper/30.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.30.0.1.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net45/CsvHelper.dll",
+        "lib/net45/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net5.0/CsvHelper.dll",
+        "lib/net5.0/CsvHelper.xml",
+        "lib/net6.0/CsvHelper.dll",
+        "lib/net6.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    },
     "Google.Protobuf/3.25.1": {
       "sha512": "Sw9bq4hOD+AaS3RrnmP5IT25cyZ/T1qpM0e8+G+23Nojhv7+ScJFPEAQo1m4EFQWhXoI4FRZDrK+wjHCPw9yxg==",
       "type": "package",
@@ -197,6 +271,77 @@
         "packageIcon.png"
       ]
     },
+    "Grpc.Tools/2.59.0": {
+      "sha512": "LzL71SCmx62zh6YMBOAEYxzK7LlhHYsBADnawyn8u3n/HL6qntZtGN2ep69T734zBQKWPBQVbVdiIaqaqOfhXg==",
+      "type": "package",
+      "path": "grpc.tools/2.59.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Grpc.Tools.props",
+        "build/Grpc.Tools.targets",
+        "build/_grpc/Grpc.CSharp.xml",
+        "build/_grpc/_Grpc.Tools.props",
+        "build/_grpc/_Grpc.Tools.targets",
+        "build/_protobuf/Google.Protobuf.Tools.props",
+        "build/_protobuf/Google.Protobuf.Tools.targets",
+        "build/_protobuf/Protobuf.CSharp.xml",
+        "build/_protobuf/net45/Protobuf.MSBuild.dll",
+        "build/_protobuf/net45/Protobuf.MSBuild.pdb",
+        "build/_protobuf/netstandard1.3/Protobuf.MSBuild.dll",
+        "build/_protobuf/netstandard1.3/Protobuf.MSBuild.pdb",
+        "build/native/include/google/protobuf/any.proto",
+        "build/native/include/google/protobuf/api.proto",
+        "build/native/include/google/protobuf/descriptor.proto",
+        "build/native/include/google/protobuf/duration.proto",
+        "build/native/include/google/protobuf/empty.proto",
+        "build/native/include/google/protobuf/field_mask.proto",
+        "build/native/include/google/protobuf/source_context.proto",
+        "build/native/include/google/protobuf/struct.proto",
+        "build/native/include/google/protobuf/timestamp.proto",
+        "build/native/include/google/protobuf/type.proto",
+        "build/native/include/google/protobuf/wrappers.proto",
+        "grpc.tools.2.59.0.nupkg.sha512",
+        "grpc.tools.nuspec",
+        "packageIcon.png",
+        "tools/linux_arm64/grpc_csharp_plugin",
+        "tools/linux_arm64/protoc",
+        "tools/linux_x64/grpc_csharp_plugin",
+        "tools/linux_x64/protoc",
+        "tools/linux_x86/grpc_csharp_plugin",
+        "tools/linux_x86/protoc",
+        "tools/macosx_x64/grpc_csharp_plugin",
+        "tools/macosx_x64/protoc",
+        "tools/windows_x64/grpc_csharp_plugin.exe",
+        "tools/windows_x64/protoc.exe",
+        "tools/windows_x86/grpc_csharp_plugin.exe",
+        "tools/windows_x86/protoc.exe"
+      ]
+    },
+    "MathNet.Numerics/5.0.0": {
+      "sha512": "pg1W2VwaEQMAiTpGK840hZgzavnqjlCMTVSbtVCXVyT+7AX4mc1o89SPv4TBlAjhgCOo9c1Y+jZ5m3ti2YgGgA==",
+      "type": "package",
+      "path": "mathnet.numerics/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net461/MathNet.Numerics.dll",
+        "lib/net461/MathNet.Numerics.xml",
+        "lib/net48/MathNet.Numerics.dll",
+        "lib/net48/MathNet.Numerics.xml",
+        "lib/net5.0/MathNet.Numerics.dll",
+        "lib/net5.0/MathNet.Numerics.xml",
+        "lib/net6.0/MathNet.Numerics.dll",
+        "lib/net6.0/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.5.0.0.nupkg.sha512",
+        "mathnet.numerics.nuspec"
+      ]
+    },
     "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
       "sha512": "/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
       "type": "package",
@@ -249,6 +394,18 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "MultiCashFlow.Common/1.0.1.1": {
+      "sha512": "zMadvvj/k1kj2SfihrPL8LGEc+xF7S0EScEaYsdMEDfFrOW8UJdn4Wpe52d/m/cQRf3zKVL//dZylvyixXbq2A==",
+      "type": "package",
+      "path": "multicashflow.common/1.0.1.1",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net6.0/MultiCashFlow.Common.dll",
+        "lib/net6.0/MultiCashFlow.Common.xml",
+        "multicashflow.common.1.0.1.1.nupkg.sha512",
+        "multicashflow.common.nuspec"
+      ]
+    },
     "PricingClient/1.0.0": {
       "type": "project",
       "path": "../PricingClient/PricingClient.csproj",
@@ -257,23 +414,27 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "CsvHelper >= 30.0.1",
+      "Google.Protobuf >= 3.25.1",
+      "Grpc.Tools >= 2.59.0",
+      "MultiCashFlow.Common >= 1.0.1.1",
       "PricingClient >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\": {}
+    "C:\\Users\\lamur\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj",
+      "projectUniqueName": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj",
       "projectName": "FinancialApp",
-      "projectPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj",
-      "packagesPath": "C:\\Users\\Erwan Izenic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\obj\\",
+      "projectPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj",
+      "packagesPath": "C:\\Users\\lamur\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Erwan Izenic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lamur\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -281,15 +442,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Users\\Erwan Izenic\\Downloads": {},
+        "C:\\Users\\lamur\\Documents\\3aif": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj": {
-              "projectPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj"
+            "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj": {
+              "projectPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj"
             }
           }
         }
@@ -303,6 +464,26 @@
     "frameworks": {
       "net7.0": {
         "targetAlias": "net7.0",
+        "dependencies": {
+          "CsvHelper": {
+            "target": "Package",
+            "version": "[30.0.1, )"
+          },
+          "Google.Protobuf": {
+            "target": "Package",
+            "version": "[3.25.1, )"
+          },
+          "Grpc.Tools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.59.0, )"
+          },
+          "MultiCashFlow.Common": {
+            "target": "Package",
+            "version": "[1.0.1.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

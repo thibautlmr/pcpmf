@@ -1,14 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "RbfL5UsgSeLqAiZQjG8fdJh6GCM5njyKzydCvRy1nnlzdXUmPQRm+U4kItFyp0tBbb/1b6sHPT/35w1C5B1KiQ==",
+  "dgSpecHash": "VvyzzFZSzd99muB6F5RMsss4zwOsAzaqiWefDkY8sgTHn1BTKgHakBKJF64c8vplXTov0+SBYekTjgXjfosm0g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj",
+  "projectFilePath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\grpc.core.api\\2.60.0-pre1\\grpc.core.api.2.60.0-pre1.nupkg.sha512",
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\grpc.net.client\\2.60.0-pre1\\grpc.net.client.2.60.0-pre1.nupkg.sha512",
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\grpc.net.common\\2.60.0-pre1\\grpc.net.common.2.60.0-pre1.nupkg.sha512",
-    "C:\\Users\\Erwan Izenic\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+    "C:\\Users\\lamur\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\grpc.core.api\\2.60.0-pre1\\grpc.core.api.2.60.0-pre1.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\grpc.net.client\\2.60.0-pre1\\grpc.net.client.2.60.0-pre1.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\grpc.net.common\\2.60.0-pre1\\grpc.net.common.2.60.0-pre1.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\grpc.tools\\2.59.0\\grpc.tools.2.59.0.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\mathnet.numerics\\5.0.0\\mathnet.numerics.5.0.0.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\lamur\\.nuget\\packages\\multicashflow.common\\1.0.1.1\\multicashflow.common.1.0.1.1.nupkg.sha512"
   ],
   "logs": []
 }

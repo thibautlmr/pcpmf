@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Grpc.Core;
 using PricingClient;
 using Grpc.Net.Client;
+
 public static class GrpcClientUtil
 {
     public static async Task<ReqInfo> GetHeartbeatInfoAsync(string serverAddress)
@@ -21,6 +17,27 @@ public static class GrpcClientUtil
         {
             var heartbeatResponse = await client.HeartbeatAsync(new Empty());
             return heartbeatResponse;
+        }
+        catch (RpcException e)
+        {
+            Console.WriteLine($"Error: {e.Status}");
+            return null;
+        }
+    }
+
+    public static async Task<PricingOutput> GetPriceAndDeltasAsync(string serverAddress, PricingInput pricingInput)
+    {
+        var httpHandler = new HttpClientHandler();
+        httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+        using var channel = GrpcChannel.ForAddress(serverAddress, new GrpcChannelOptions { HttpHandler = httpHandler });
+        var client = new GrpcPricer.GrpcPricerClient(channel);
+
+        try
+        {
+            // Send the request
+            var priceAndDeltaResponse = await client.PriceAndDeltasAsync(pricingInput);
+            return priceAndDeltaResponse;
         }
         catch (RpcException e)
         {

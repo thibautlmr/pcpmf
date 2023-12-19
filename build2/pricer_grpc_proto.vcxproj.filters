@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\build2\pricing.grpc.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\build2\pricing.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\build2\pricing.grpc.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\build2\pricing.pb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\build2\CMakeFiles\d7c970eac0305ff7ef3e5d18b261c2d1\pricing.pb.cc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\lamur\Documents\3aif\pcpmf\pcpmf-project\PricerEngine\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{88914371-D6B5-3702-8818-F8070402687E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{090356C9-BCC5-32AB-A46C-6AC0A8BC34FA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6F12A8F4-C00D-30F5-AFC1-8F0435ECC5A2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

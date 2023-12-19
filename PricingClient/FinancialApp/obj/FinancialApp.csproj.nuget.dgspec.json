@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj": {}
+    "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj": {
+    "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj",
+        "projectUniqueName": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj",
         "projectName": "FinancialApp",
-        "projectPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\FinancialApp.csproj",
-        "packagesPath": "C:\\Users\\Erwan Izenic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\FinancialApp\\obj\\",
+        "projectPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\FinancialApp.csproj",
+        "packagesPath": "C:\\Users\\lamur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\FinancialApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Erwan Izenic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lamur\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,15 +22,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Erwan Izenic\\Downloads": {},
+          "C:\\Users\\lamur\\Documents\\3aif": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj": {
-                "projectPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj"
+              "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj": {
+                "projectPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj"
               }
             }
           }
@@ -44,6 +44,26 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[30.0.1, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.25.1, )"
+            },
+            "Grpc.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.59.0, )"
+            },
+            "MultiCashFlow.Common": {
+              "target": "Package",
+              "version": "[1.0.1.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -64,17 +84,17 @@
         }
       }
     },
-    "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj": {
+    "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj",
+        "projectUniqueName": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj",
         "projectName": "PricingClient",
-        "projectPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\PricingClient.csproj",
-        "packagesPath": "C:\\Users\\Erwan Izenic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmfTry\\PricingClient\\PricingClient\\obj\\",
+        "projectPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\PricingClient.csproj",
+        "packagesPath": "C:\\Users\\lamur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\PricingClient\\PricingClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Erwan Izenic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\lamur\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -82,7 +102,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Users\\Erwan Izenic\\Downloads": {},
+          "C:\\Users\\lamur\\Documents\\3aif": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

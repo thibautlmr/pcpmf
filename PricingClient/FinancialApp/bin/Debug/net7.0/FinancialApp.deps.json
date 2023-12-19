@@ -8,10 +8,22 @@
     ".NETCoreApp,Version=v7.0": {
       "FinancialApp/1.0.0": {
         "dependencies": {
+          "CsvHelper": "30.0.1",
+          "Google.Protobuf": "3.25.1",
+          "Grpc.Tools": "2.59.0",
+          "MultiCashFlow.Common": "1.0.1.1",
           "PricingClient": "1.0.0"
         },
         "runtime": {
           "FinancialApp.dll": {}
+        }
+      },
+      "CsvHelper/30.0.1": {
+        "runtime": {
+          "lib/net6.0/CsvHelper.dll": {
+            "assemblyVersion": "30.0.0.0",
+            "fileVersion": "30.0.1.0"
+          }
         }
       },
       "Google.Protobuf/3.25.1": {
@@ -53,11 +65,32 @@
           }
         }
       },
+      "Grpc.Tools/2.59.0": {},
+      "MathNet.Numerics/5.0.0": {
+        "runtime": {
+          "lib/net6.0/MathNet.Numerics.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.0.0"
+          }
+        }
+      },
       "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
             "fileVersion": "6.0.21.52210"
+          }
+        }
+      },
+      "MultiCashFlow.Common/1.0.1.1": {
+        "dependencies": {
+          "CsvHelper": "30.0.1",
+          "MathNet.Numerics": "5.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/MultiCashFlow.Common.dll": {
+            "assemblyVersion": "1.0.1.1",
+            "fileVersion": "1.0.1.1"
           }
         }
       },
@@ -77,6 +110,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "CsvHelper/30.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg==",
+      "path": "csvhelper/30.0.1",
+      "hashPath": "csvhelper.30.0.1.nupkg.sha512"
     },
     "Google.Protobuf/3.25.1": {
       "type": "package",
@@ -106,12 +146,33 @@
       "path": "grpc.net.common/2.60.0-pre1",
       "hashPath": "grpc.net.common.2.60.0-pre1.nupkg.sha512"
     },
+    "Grpc.Tools/2.59.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-LzL71SCmx62zh6YMBOAEYxzK7LlhHYsBADnawyn8u3n/HL6qntZtGN2ep69T734zBQKWPBQVbVdiIaqaqOfhXg==",
+      "path": "grpc.tools/2.59.0",
+      "hashPath": "grpc.tools.2.59.0.nupkg.sha512"
+    },
+    "MathNet.Numerics/5.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pg1W2VwaEQMAiTpGK840hZgzavnqjlCMTVSbtVCXVyT+7AX4mc1o89SPv4TBlAjhgCOo9c1Y+jZ5m3ti2YgGgA==",
+      "path": "mathnet.numerics/5.0.0",
+      "hashPath": "mathnet.numerics.5.0.0.nupkg.sha512"
+    },
     "Microsoft.Extensions.Logging.Abstractions/6.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-/HggWBbTwy8TgebGSX5DBZ24ndhzi93sHUBDvP1IxbZD7FDokYzdAr6+vbWGjw2XAfR2EJ1sfKUotpjHnFWPxA==",
       "path": "microsoft.extensions.logging.abstractions/6.0.0",
       "hashPath": "microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+    },
+    "MultiCashFlow.Common/1.0.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zMadvvj/k1kj2SfihrPL8LGEc+xF7S0EScEaYsdMEDfFrOW8UJdn4Wpe52d/m/cQRf3zKVL//dZylvyixXbq2A==",
+      "path": "multicashflow.common/1.0.1.1",
+      "hashPath": "multicashflow.common.1.0.1.1.nupkg.sha512"
     },
     "PricingClient/1.0.0": {
       "type": "project",
