@@ -1,6 +1,6 @@
 ﻿using FinancialApp;
-using GrpcPricing.Protos;
 using ParameterInfo;
+using PricingClient;
 
 class Program
 {
@@ -10,16 +10,15 @@ class Program
         string[] argsMano = { "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\test-param1.json", "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\MarketData.csv" };
         Input input = new(argsMano);
         DataUtilities dataUtilities = new(input);
+        double[] spots = dataUtilities.GetSpots(dataUtilities.MarketData[0].Date);
+        List<List<double>> past = new() { spots.ToList() };
         List<DateTime> dates = dataUtilities.GetDateTimes(dataUtilities.MarketData);
-        ComputationUtilities computationUtilities = new(null, dataUtilities);
-        PricingInputUtilities pricingInputUtilities = new(dataUtilities);
-        PricingInput pricingInput = pricingInputUtilities.CreatePricingInput();
-/*        var priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, pricingInput);
+        Pricer priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, true, 0, past);
         if (priceAndDeltaInfo != null)
         {
             Console.WriteLine($"Price Call Vanille: {priceAndDeltaInfo.Price}");
-        }*/
-
+        }
+        ComputationUtilities computationUtilities = new(priceAndDeltaInfo, dataUtilities);
         List<DateTime> dateTimes = dataUtilities.GetDateTimes(dataUtilities.MarketData);
         var marketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dateTimes[0]);
         Handler handler = new(computationUtilities, marketDataCurrDate);

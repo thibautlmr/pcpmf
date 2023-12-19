@@ -1,17 +1,16 @@
-﻿using GrpcPricing.Protos;
-using MarketData;
+﻿using PricingClient;
 using ParameterInfo.RebalancingOracleDescriptions;
 using TimeHandler;
 namespace FinancialApp
 {
     public class ComputationUtilities
     {
-        public PricingOutput PricingOutput { get; set; }
+        public Pricer Pricer { get; set; }
         public DataUtilities DataUtilities { get; set; }
 
-        public ComputationUtilities(PricingOutput pricingOutput, DataUtilities dataUtilities)
+        public ComputationUtilities(Pricer pricer, DataUtilities dataUtilities)
         {
-            PricingOutput = pricingOutput;
+            Pricer = pricer;
             DataUtilities = dataUtilities;
         }
 
@@ -41,23 +40,23 @@ namespace FinancialApp
 
         public double[] GetDeltas()
         {
-            return PricingOutput.Deltas.ToArray();
+            return Pricer.Deltas.ToArray();
         }
 
         public double[] GetDeltaStdDev()
         {
-            return PricingOutput.DeltasStdDev.ToArray();
+            return Pricer.DeltasStdDev.ToArray();
 
         }
 
         public double GetPrice()
         {
-            return PricingOutput.Price;
+            return Pricer.Price;
         }
 
         public double GetPriceStdDev()
         {
-            return PricingOutput.PriceStdDev;
+            return Pricer.PriceStdDev;
         }
 
         public bool IsMonitoringDateReached(DateTime date)

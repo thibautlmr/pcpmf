@@ -25,7 +25,7 @@ public static class GrpcClientUtil
         }
     }
 
-    public static async Task<PricingOutput> GetPriceAndDeltasAsync(string serverAddress, PricingInput pricingInput)
+    public static async Task<Pricer> GetPriceAndDeltasAsync(string serverAddress, bool isMonitoringDate, double time, List<List<double>> past)
     {
         var httpHandler = new HttpClientHandler();
         httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
@@ -36,8 +36,10 @@ public static class GrpcClientUtil
         try
         {
             // Send the request
+            PricingInputUtilities pricingInputUtilities = new();
+            PricingInput pricingInput = pricingInputUtilities.CreatePricingInput(isMonitoringDate, time, past); 
             var priceAndDeltaResponse = await client.PriceAndDeltasAsync(pricingInput);
-            return priceAndDeltaResponse;
+            return new(priceAndDeltaResponse);
         }
         catch (RpcException e)
         {
