@@ -2,3 +2,5 @@ buildBarrier/
 build/
 build-*/
 obj/
+.vscode/
+.vs/
