@@ -1,3 +1,4 @@
 buildBarrier/
 build/
 build-*/
+obj/
