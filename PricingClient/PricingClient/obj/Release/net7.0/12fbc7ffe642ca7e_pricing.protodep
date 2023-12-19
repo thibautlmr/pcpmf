@@ -1,2 +1,0 @@
-obj\Release\net7.0\Protos/Pricing.cs \
-obj\Release\net7.0\Protos/PricingGrpc.cs: Protos/pricing.proto
