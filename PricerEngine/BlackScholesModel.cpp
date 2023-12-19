@@ -51,6 +51,7 @@ BlackScholesModel::asset(PnlMat* path, double T, int nbTimeSteps, PnlRng* rng)
 
     // Boucle sur le temps
     for (int i = 1; i <= nbTimeSteps; i++) {
+
         pnl_vect_rng_normal_d(G_, size_, rng);
         // Boucle sur les actifs
         for (int j = 0; j < size_; j++) {
@@ -83,21 +84,52 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, int nbTimeSteps, PnlR
     // Initialisation
     int d = size_;
     double dt = T / nbTimeSteps;
-    PnlVect* S_current;
-    double nbPast = (int)(t / dt);
-    double nbGenerate = nbTimeSteps - nbPast;
+    PnlVect *S_current = pnl_vect_create(d);
+    double nbPast = past->m;
     pnl_mat_get_row(S_current, past, nbPast - 1);
-    PnlVect* S_next = pnl_vect_copy(S_current);
-    PnlVect* currentVect;
+    PnlVect *S_next = pnl_vect_copy(S_current);
+    PnlVect *currentVect = pnl_vect_create(d);
 
     // Remplissage de path avec le past
-    for (int i = 0; i < nbPast; i++) {
+    for (int i = 0; i < nbPast - 1; i++) {
         pnl_mat_get_row(currentVect, past, i);
         pnl_mat_set_row(path, currentVect, i);
     }
 
+    double modulo = 1;
+    double tmp = t;
+    while (tmp > dt) {
+        tmp -= dt;
+    }
+
+    if (abs(tmp) < pow(10, -6)) {
+        pnl_mat_get_row(currentVect, past, nbPast - 1);
+        pnl_mat_set_row(path, currentVect, nbPast - 1);
+    } else {
+        // Boucle sur les actifs
+        for (int j = 0; j < d; j++) {
+
+            double asset_current_value = pnl_vect_get(S_current, j);
+
+            // Calcul variable aléatoire gaussienne
+            double gaussian = pnl_rng_normal(rng);
+
+            // Calcul de la prochaine valeur de trajectoire pour l'actif considéré
+            double drift = (r_ - (pnl_vect_get(sigma_, j) * pnl_vect_get(sigma_, j)) / 2) * (dt - tmp);
+            double diffusion = pnl_vect_get(sigma_, j) * sqrt(dt - tmp);
+
+            double asset_next_value = asset_current_value * exp(drift + diffusion * gaussian);
+
+            pnl_vect_set(S_next, j, asset_next_value);
+        }
+        // Actualisation des tableaux
+        S_current = pnl_vect_copy(S_next);
+        // Remplissage de la matrice de trajectoires
+        pnl_mat_set_row(path, S_next, nbPast - 1);
+    }
+
     // Boucle sur le temps
-    for (int i = nbPast; i < nbTimeSteps; i++) {
+    for (int i = nbPast; i < path->m; i++) {
 
         // Boucle sur les actifs
         for (int j = 0; j < d; j++) {
@@ -129,21 +161,24 @@ BlackScholesModel::shiftAsset(PnlMat* shiftPath, const PnlMat* path, int d, doub
     int nbTimeSteps = path->m - 1;
     int dMax = path->n;
 
+    pnl_mat_clone(shiftPath, path);
+
     // Vérification de la validité des inputs
     if (d < 0 || d >= dMax) {
         std::cerr << "Error : Invalid index input." << std::endl;
         return;
     }
 
-    // Copie de la trajectoire d'origine dans shiftPath
-    pnl_mat_clone(shiftPath, path);
-
     // Calcul de l'indice de début de shift
-    int startingShiftIndex = (t / timestep);
+
+    int startingShiftIndex = ceil(t / timestep);
+    if (abs(t - timestep) < pow(10, -6)) {
+        startingShiftIndex -= 1;
+    }
 
     // Parcours de shiftPath en appliquant le shift
-    pnl_mat_resize(column_, shiftPath->m, 1);
-    pnl_mat_extract_subblock(column_, shiftPath, startingShiftIndex, nbTimeSteps - startingShiftIndex + 1, d, 1);
-    pnl_mat_mult_scalar(column_, 1 + h);
-    pnl_mat_set_subblock(shiftPath, column_, startingShiftIndex, d);
+    // pnl_mat_resize(column_, shiftPath->m, 1);
+    for (int l = startingShiftIndex; l < shiftPath->m; l++) {
+        pnl_mat_set(shiftPath, l, d, (1 + h) * pnl_mat_get(shiftPath, l, d));
+    }
 }
