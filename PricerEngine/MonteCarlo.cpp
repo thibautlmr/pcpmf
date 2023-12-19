@@ -65,8 +65,8 @@ MonteCarlo::delta(PnlVect* delta, PnlVect* std_dev)
 
     PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
     PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
+    std::vector<double> factor(opt_->size_, 0.0);
     double timeStep = (opt_->T_ / opt_->nbTimeSteps_);
-    double factor[mod_->size_] = {0.0};
     double commonFactor = exp(-mod_->r_ * (opt_->T_)) / (nbSamples_ * 2 * fdStep_);
 
     PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
@@ -129,7 +129,6 @@ MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev
     PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
     PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
     double timeStep = (opt_->T_ / opt_->nbTimeSteps_);
-    double factor[mod_->size_] = {0.0};
     double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (nbSamples_ * 2 * fdStep_);
     double interSquare;
     double payoffShiftPlus, payoffShiftMinus;
@@ -160,14 +159,11 @@ MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev
         pnl_mat_set_row(deltasMat, diffShift, i);
     }
 
-    for (int i = 0; i < mod_->size_; i++) {
-        factor[i] = (commonFactor / pnl_mat_get(past, past->m - 1, i));
-        pnl_vect_set(delta, i, factor[i] * pnl_vect_get(delta, i));
-    }
+    PnlVect *lastRow = pnl_vect_create(opt_->size_);
+    pnl_mat_get_row(lastRow, past, past->m - 1);
+    pnl_vect_mult_scalar(delta, commonFactor);
+    pnl_vect_div_vect_term(delta, lastRow);
 
-    for (int k = 0; k < mod_->size_; k++) {
-        pnl_vect_set(std_dev, k, factor[k]);
-    }
 
     pnl_mat_free(&shiftMinus);
     pnl_mat_free(&shiftPlus);

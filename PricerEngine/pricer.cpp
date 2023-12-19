@@ -43,6 +43,7 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     double maturity = GET(this->paymentDates, 0);
     double strike = GET(this->strikes, 0);
     double interestRate = this->interestRate;
+    PnlMat *pastTmp = pnl_mat_create_from_scalar(1, 1, 100);
     PnlVect *spot = pnl_vect_create_from_scalar(1, 100);
     PnlVect *vol = pnl_vect_create_from_scalar(1, MGET(this->volatility, 0, 0));
     BlackScholesModel *bsm = new BlackScholesModel(1, interestRate, 1., vol, spot);
@@ -50,10 +51,12 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
     pnl_rng_sseed(rng, time(NULL));
     MonteCarlo *mc = new MonteCarlo(bsm, option, rng, this->fdStep, this->nSamples);
-    mc->price(price, priceStdDev);
+    mc->price(pastTmp, 0, price, priceStdDev);
+    mc->delta(pastTmp, 0, deltas, deltasStdDev);
     double delta;
     double expectedPrice;
     pnl_cf_call_bs(100., strike, maturity, interestRate, 0., 0.2, &expectedPrice, &delta);
     std::cout << "Le prix theorique de cette option en 0 est : " << expectedPrice << std::endl;
     std::cout << "Le prix obtenu de cette option en 0 est : " << price << std::endl;
+    std::cout << "Le delta obtenu de cette option en 0 est : " << GET(deltas, 0) << std::endl;
 }
