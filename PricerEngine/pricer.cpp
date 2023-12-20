@@ -48,17 +48,17 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     PnlVect *sigma = pnl_vect_create_from_scalar(1, MGET(this->volatility, 0, 0));
     PnlVect *spot = pnl_vect_create_from_zero(size);
     pnl_mat_get_row(spot, past, 0);
-    BlackScholesModel *bsm = new BlackScholesModel(size, r, 1., sigma, spot);
+    BlackScholesModel *bsm = new BlackScholesModel(size, r, 1., sigma, spot, this->volatility, this->paymentDates);
     double maturity = GET(this->paymentDates, 0);
     double strike = GET(this->strikes, 0);
-    VanillaOption *opt = new VanillaOption(maturity, 250, 1, strike);
+    VanillaOption *opt = new VanillaOption(maturity, 1, strike);
     PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
     pnl_rng_sseed(rng, time(NULL));
     double fdStep = this->fdStep;
     long nbSamples = this->nSamples;
     MonteCarlo *mc = new MonteCarlo(bsm, opt, rng, fdStep, nbSamples);
-    mc->delta(past, currentDate, deltas, deltasStdDev);
-    mc->price(past, currentDate, price, priceStdDev);
+    mc->delta(past, currentDate, deltas, deltasStdDev, isMonitoringDate);
+    mc->price(past, currentDate, price, priceStdDev, isMonitoringDate);
 
     /*double maturity = GET(this->paymentDates, 0);
     double strike = GET(this->strikes, 0);

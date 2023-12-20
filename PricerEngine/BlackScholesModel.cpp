@@ -31,54 +31,10 @@ BlackScholesModel::~BlackScholesModel()
     pnl_mat_free(&column_);
 }
 
-//void
-//BlackScholesModel::asset(PnlMat* path, double T, int nbTimeSteps, PnlRng* rng)
-//{
-//
-//    pnl_vect_clone(sCurrent_, spot_);
-//    pnl_vect_clone(sNext_, spot_);
-//
-//    // Initialisation
-//    double dt = T / nbTimeSteps;
-//
-//    // Initilisation de path avec les valeurs initiales des assets
-//    pnl_mat_set_row(path, spot_, 0);
-//
-//    double assetCurrentValue, drift, diffusion, assetNextValue;
-//    double volAsset;
-//
-//    // Boucle sur le temps
-//    for (int i = 1; i <= nbTimeSteps; i++) {
-//
-//        pnl_vect_rng_normal_d(G_, size_, rng);
-//        // Boucle sur les actifs
-//        for (int j = 0; j < size_; j++) {
-//            assetCurrentValue = pnl_vect_get(sCurrent_, j);
-//
-//            // Calcul de la prochaine valeur de trajectoire pour l'actif considéré
-//            volAsset = pnl_vect_get(sigma_, j);
-//            drift = (r_ - (volAsset * volAsset) / 2) * dt;
-//            diffusion = volAsset * sqrt(dt);
-//
-//            pnl_mat_get_row(choleskyRow_, cholesky_, j);
-//            pnl_vect_clone(tmpG_, G_);
-//            pnl_vect_mult_vect_term(tmpG_, choleskyRow_);
-//            assetNextValue = assetCurrentValue * exp(drift + diffusion * pnl_vect_sum(tmpG_));
-//
-//            pnl_vect_set(sNext_, j, assetNextValue);
-//        }
-//        // Actualisation des tableaux
-//        pnl_vect_clone(sCurrent_, sNext_);
-//
-//        // Remplissage de la matrice de trajectoires
-//        pnl_mat_set_row(path, sNext_, i);
-//    }
-//}
 
 void
 BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const PnlMat* past, bool isMonitoringDate)
 {
-
     // Initialisation
     int d = size_;
     double step = 0;

@@ -1,7 +1,7 @@
 #include "VanillaOption.hpp"
 
-VanillaOption::VanillaOption(double T, int nbTimeSteps, int size, float strike)
-  : Option(T, nbTimeSteps, size)
+VanillaOption::VanillaOption(double T, int size, float strike)
+  : Option(T, size)
 {
     strike_ = strike;
 }
@@ -16,5 +16,5 @@ VanillaOption::VanillaOption(char* jsonPath)
 double
 VanillaOption::payoff(const PnlMat* path)
 {
-    return std::max(MGET(path, nbTimeSteps_, 0) - strike_, 0.0);
+    return std::max(MGET(path, size_, 0) - strike_, 0.0);
 }

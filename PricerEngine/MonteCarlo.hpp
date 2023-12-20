@@ -19,13 +19,6 @@ class MonteCarlo
     MonteCarlo(BlackScholesModel* mod, Option* opt, PnlRng* rng, double fdStep, long nbSamples);
 
     ~MonteCarlo();
-    /**
-     * Calcule le prix de l'option à la date 0
-     *
-     * @param[out] prix valeur de l'estimateur Monte Carlo
-     * @param[out] std_dev écart type de l'estimateur
-     */
-    void price(double& prix, double& std_dev);
 
     /**
      * Calcule le prix de l'option à la date t
@@ -36,7 +29,7 @@ class MonteCarlo
      * @param[out] prix contient le prix
      * @param[out] std_dev contient l'écart type de l'estimateur
      */
-    void price(const PnlMat* past, double t, double& prix, double& std_dev);
+    void price(const PnlMat* past, double t, double& prix, double& std_dev, bool isMonitoringDate);
 
     /**
      * Calcule le delta de l'option à la date t
@@ -49,13 +42,7 @@ class MonteCarlo
      */
     void delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev, bool isMonitoringDate);
 
-    /**
-     * Calcule le delta de l'option à la date 0
-     *
-     * @param[out] delta contient le vecteur de delta
-     * @param[out] std_dev contient l'écart type de l'estimateur
-     */
-    void delta(PnlVect* delta, PnlVect* std_dev);
+
 
     double p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init);
 

@@ -1,14 +1,16 @@
 #include "Option.hpp"
 #include "algorithm"
 
-class VanillaOption : public Option
+class ConditionalCall : public Option
 {
   public:
-    float strike_;
+    double r_;
+    PnlVect* strikes_;
+    PnlVect *paymentDates_;
+    bool isMonitoringDate_;
 
-    VanillaOption(double T, int size, float strike);
+    ConditionalCall(double T, int size, double r, PnlVect* strike, PnlVect* paymentDates, bool isMonitoringDate);
 
-    VanillaOption(char* jsonPath);
 
     /**
      * Calcule la valeur du payoff sur la trajectoire

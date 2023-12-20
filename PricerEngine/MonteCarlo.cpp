@@ -15,38 +15,18 @@ MonteCarlo::~MonteCarlo()
 {
 }
 
-void
-MonteCarlo::price(double& prix, double& std_dev)
-{
-    double sum = 0;
-    double squareSum = 0;
-    PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    double currentPayoff;
-    double factor = exp(-(mod_->r_) * (opt_->T_));
-    for (int i = 0; i < nbSamples_; i++) {
-        mod_->asset(path, opt_->T_, opt_->nbTimeSteps_, rng_);
-        currentPayoff = opt_->payoff(path);
-        sum += currentPayoff;
-        squareSum += currentPayoff * currentPayoff;
-    }
-    pnl_mat_free(&path);
-    prix = factor * sum / nbSamples_;
-    squareSum = ((pow(factor, 2) * squareSum) / nbSamples_) - prix * prix;
-    std_dev = sqrt(squareSum / nbSamples_);
-    double lower_bound = prix - 1.96 * std_dev / sqrt(nbSamples_);
-    double upper_bound = prix + 1.96 * std_dev / sqrt(nbSamples_);
-}
+
 
 void
-MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev)
+MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev, bool isMonitoringDate)
 {
     double sum = 0;
     double squareSum = 0;
     double currentPayoff;
-    PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
+    PnlMat *path = pnl_mat_create(opt_->size_ + 1, opt_->size_);
     double factor = exp(-(mod_->r_) * (opt_->T_ - t));
     for (int i = 0; i <= nbSamples_; i++) {
-        mod_->asset(path, t, opt_->T_, opt_->nbTimeSteps_, rng_, past);
+        mod_->asset(path, t, opt_->T_, rng_, past, isMonitoringDate);
         currentPayoff = opt_->payoff(path);
         sum += currentPayoff;
         squareSum += currentPayoff * currentPayoff;
@@ -59,87 +39,27 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev)
     double upper_bound = prix + 1.96 * std_dev / sqrt(nbSamples_);
 }
 
-void
-MonteCarlo::delta(PnlVect* delta, PnlVect* std_dev)
-{
 
-    PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    std::vector<double> factor(opt_->size_, 0.0);
-    double timeStep = (opt_->T_ / opt_->nbTimeSteps_);
-    double commonFactor = exp(-mod_->r_ * (opt_->T_)) / (nbSamples_ * 2 * fdStep_);
-
-    PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
-    PnlMat *shiftPlus = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    PnlMat *shiftMinus = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    double payoffShiftPlus, payoffShiftMinus;
-    PnlVect *diffShift = pnl_vect_create(opt_->size_);
-
-    for (int i = 0; i < nbSamples_; i++) {
-        mod_->asset(path, opt_->T_, opt_->nbTimeSteps_, rng_);
-
-        pnl_mat_clone(pathCopy, path);
-        pnl_mat_clone(shiftPlus, pathCopy);
-        pnl_mat_clone(shiftMinus, pathCopy);
-
-        for (int k = 0; k < mod_->size_; k++) {
-
-            mod_->shiftAsset(shiftPlus, path, k, fdStep_, 0, timeStep);
-            mod_->shiftAsset(shiftMinus, path, k, -fdStep_, 0, timeStep);
-            payoffShiftPlus = opt_->payoff(shiftPlus);
-            payoffShiftMinus = opt_->payoff(shiftMinus);
-            pnl_vect_set(diffShift, k, payoffShiftPlus - payoffShiftMinus);
-            pnl_mat_clone(shiftPlus, pathCopy);
-            pnl_mat_clone(shiftMinus, pathCopy);
-        }
-        pnl_vect_plus_vect(delta, diffShift);
-        pnl_vect_mult_vect_term(diffShift, diffShift);
-        pnl_mat_set_row(deltasMat, diffShift, i);
-    }
-
-    PnlVect *tmp = pnl_vect_create_from_zero(opt_->size_);
-    PnlVect *deltaBis = pnl_vect_copy(delta);
-    pnl_vect_div_scalar(deltaBis, nbSamples_);
-    pnl_vect_mult_vect_term(deltaBis, deltaBis);
-
-    for (int i = 0; i < nbSamples_; i++) {
-        pnl_mat_get_row(tmp, deltasMat, i);
-        pnl_vect_plus_vect(std_dev, tmp);
-        pnl_vect_minus_vect(std_dev, deltaBis);
-    }
-    for (int i = 0; i < mod_->size_; i++) {
-        factor[i] = (commonFactor / pnl_mat_get(path, 0, i));
-        pnl_vect_set(delta, i, factor[i] * pnl_vect_get(delta, i));
-        pnl_vect_set(std_dev, i, factor[i] * sqrt(pnl_vect_get(std_dev, i)));
-    }
-    pnl_mat_free(&path);
-    pnl_mat_free(&deltasMat);
-    pnl_mat_free(&shiftPlus);
-    pnl_mat_free(&shiftMinus);
-    pnl_vect_free(&deltaBis);
-    pnl_vect_free(&diffShift);
-    pnl_vect_free(&tmp);
-}
 
 void
 MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev, bool isMonitoringDate)
 {
 
-    PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
+    PnlMat *path = pnl_mat_create(opt_->size_ + 1, opt_->size_);
+    PnlMat *pathCopy = pnl_mat_create(opt_->size_ + 1, opt_->size_);
     PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
     double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (2 * fdStep_);
     double interSquare;
     double payoffShiftPlus, payoffShiftMinus;
     PnlVect *diffShift = pnl_vect_create(opt_->size_);
-    PnlMat *shiftPlus = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    PnlMat *shiftMinus = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
+    PnlMat *shiftPlus = pnl_mat_create(opt_->size_ + 1, opt_->size_);
+    PnlMat *shiftMinus = pnl_mat_create(opt_->size_ + 1, opt_->size_);
     for (int j = 0; j < delta->size; j++) {
         pnl_vect_set(delta, j, 0);
     }
 
     for (int i = 0; i < nbSamples_; i++) {
-        mod_->asset(path, t, opt_->T_, opt_->nbTimeSteps_, rng_, past);
+        mod_->asset(path, t, opt_->T_, rng_, past, isMonitoringDate);
 
         pnl_mat_clone(pathCopy, path);
 
@@ -185,7 +105,7 @@ MonteCarlo::p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init)
 
     PnlVect *delta = pnl_vect_create(opt_->size_);
     PnlVect *delta_std_dev = pnl_vect_create_from_zero(opt_->size_);
-    PnlMat *pathPNL = pnl_mat_create_from_zero(opt_->nbTimeSteps_ + 1, opt_->size_);
+    PnlMat *pathPNL = pnl_mat_create_from_zero(opt_->size_ + 1, opt_->size_);
     PnlVect *newDelta = pnl_vect_create(opt_->size_);
     PnlVect *stdDevVect = pnl_vect_create(opt_->size_);
     double currentDate = 0;
@@ -194,7 +114,7 @@ MonteCarlo::p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init)
     pnl_vect_clone(currentSpots, mod_->spot_);
     double error_pnl = 0;
     double std_dev = 0;
-    price(prix_init, std_dev);
+    //price(prix_init, std_dev);
     double vCurrent = 0;
     double commonFactor = exp(mod_->r_ * opt_->T_ / hedgingNumber);
     double currentDouble = 0;
@@ -203,7 +123,7 @@ MonteCarlo::p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init)
     pnl_mat_set_row(past, mod_->spot_, 0);
 
     // Initialisation
-    this->delta(delta, delta_std_dev);
+    //this->delta(delta, delta_std_dev);
     pnl_vect_mult_vect_term(currentSpots, delta);
     vCurrent = prix_init - pnl_vect_sum(currentSpots);
     std::cout << "price 0 : " << prix_init << std::endl;
@@ -213,8 +133,8 @@ MonteCarlo::p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init)
         currentDate += stepH;
         pnl_vect_clone(saveDelta, delta);
         updatePast(past, currentDate, i, marketData, lastWasDiscretizationTime);
-        this->delta(past, currentDate, delta, stdDevVect);
-        this->price(past, currentDate, prix_init, std_dev);
+        //this->delta(past, currentDate, delta, stdDevVect);
+        //this->price(past, currentDate, prix_init, std_dev);
         std::cout << "price " << i << " : " << prix_init << std::endl;
         pnl_vect_clone(newDelta, delta);
         pnl_mat_get_row(currentSpots, marketData, i);
@@ -245,7 +165,7 @@ MonteCarlo::p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init)
 void
 MonteCarlo::updatePast(PnlMat* past, double t, int index, PnlMat* marketData, bool& lastWasDiscretizationTime)
 {
-    double checkDiscretisation = opt_->T_ / opt_->nbTimeSteps_;
+    double checkDiscretisation = opt_->T_ / opt_->size_;
     PnlVect* rowToAdd = pnl_vect_create(opt_->size_);
 
     pnl_mat_get_row(rowToAdd, marketData, index);
@@ -265,8 +185,8 @@ void
 MonteCarlo::buildPath(PnlMat* path, PnlMat* marketData, double hedgingNumber)
 {
     int currentIndex = 0;
-    double stepN = hedgingNumber / opt_->nbTimeSteps_;
-    for (int i = 0; i <= opt_->nbTimeSteps_; i++) {
+    double stepN = hedgingNumber / opt_->size_;
+    for (int i = 0; i <= opt_->size_; i++) {
         PnlVect* currentRowMD = pnl_vect_create(opt_->size_);
         pnl_mat_get_row(currentRowMD, marketData, currentIndex);
         pnl_mat_set_row(path, currentRowMD, i);
