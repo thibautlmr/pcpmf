@@ -1,6 +1,5 @@
-buildBarrier/
 build/
-build-*/
+build*/
 obj/
 bin/
 .vscode/
