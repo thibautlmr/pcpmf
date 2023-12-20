@@ -16,7 +16,8 @@ using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
 
-PnlMat* convertPastToPnlMat(const PricingInput *input) {
+
+PnlMat *convertPastToPnlMat(const PricingInput *input) {
     // Find size
     int m, n;
     m = input->past_size();
@@ -26,7 +27,7 @@ PnlMat* convertPastToPnlMat(const PricingInput *input) {
     n = input->past(0).value_size();
     for (int i = 0; i < input->past_size(); i++) {
         const PastLines &pastLine = input->past(i);
-        if (pastLine.value_size() !=n) {
+        if (pastLine.value_size() != n) {
             std::cerr << "size mismatch in past" << std::endl;
             return NULL;
         }
@@ -36,7 +37,7 @@ PnlMat* convertPastToPnlMat(const PricingInput *input) {
     for (int i = 0; i < input->past_size(); i++) {
         const PastLines &pastLine = input->past(i);
         for (int j = 0; j < pastLine.value_size(); j++) {
-            MLET(past, i, j ) = pastLine.value(j);
+            MLET(past, i, j) = pastLine.value(j);
         }
     }
     return past;
@@ -57,7 +58,6 @@ public:
         if (past == NULL) {
             return Status(grpc::StatusCode::INVALID_ARGUMENT, "Cannot read past");
         }
-        pnl_mat_print(past);
         pricer.priceAndDeltas(past, currentDate, isMonitoringDate, price, priceStdDev, delta, deltaStdDev);
         output->set_price(price);
         output->set_pricestddev(priceStdDev);
@@ -102,6 +102,7 @@ void RunServer(nlohmann::json &jsonParams) {
     double price, priceStdDev;
     PnlVect *delta, *deltaStdDev;
     pricer.priceAndDeltas(past, 0., false, price, priceStdDev, delta, deltaStdDev);
+
 
     // Test Thibaut Fin
 
