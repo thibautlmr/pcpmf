@@ -10,7 +10,7 @@
       "DomesticCurrencyId": "eur"
     },
     "RebalancingOracleDescription": {
-      "Period": 30,
+      "Period": 10,
       "Type": "Fixed"
     },
     "NumberOfDaysInOneYear": 252,

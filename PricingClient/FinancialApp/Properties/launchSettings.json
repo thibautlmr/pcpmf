@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FinancialApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\params\\test-param5.json\"\r\n\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\params\\MarketDataVanilla.csv\"\r\n\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\portfolio5.json\""
+    }
+  }
+}

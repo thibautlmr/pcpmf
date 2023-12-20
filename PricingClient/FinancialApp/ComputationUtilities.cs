@@ -80,7 +80,7 @@ namespace FinancialApp
             return mathDateConverter.ConvertToMathDistance(firstDate, date);
         }
 
-        public void UpdateGetPriceAndDeltasAsyncParameters(DateTime date, int nthDate, bool isMonitoringDate, double elapsedTime, List<List<double>> past)
+        public void UpdateGetPriceAndDeltasAsyncParameters(DateTime date, int nthDate, ref bool isMonitoringDate, ref double elapsedTime, List<List<double>> past)
         {
             isMonitoringDate = IsMonitoringDateReached(date);
             elapsedTime = GetElapsedTime(date);
