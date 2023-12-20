@@ -5,7 +5,7 @@
         public string TestParamsPath { get; set; }
         public string MarketDataPath { get; set; }
         public string OutputFilePath { get; set; }
-        public Input() 
+        public Input()
         {
             TestParamsPath = string.Empty;
             MarketDataPath = string.Empty;
@@ -13,15 +13,15 @@
         }
         public Input(string[] args)
         {
-/*            if (args.Length != 3)
+            if (args.Length != 3)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Error: 3 parameters are required");
                 Console.ResetColor();
                 throw new ArgumentException("Error: 3 parameters are required");
-            }*/
-/*            else
-            {*/
+            }
+            else
+            {
                 if (args[0].EndsWith(".json"))
                 {
                     TestParamsPath = args[0];
@@ -44,7 +44,7 @@
                     Console.ResetColor();
                     throw new ArgumentException("Error: the market-data file should be a CSV file");
                 }
-/*                if (args[2].EndsWith(".json"))
+                if (args[2].EndsWith(".json"))
                 {
                     OutputFilePath = args[2];
                 }
@@ -54,7 +54,8 @@
                     Console.WriteLine("Error: the output file should be a JSON file");
                     Console.ResetColor();
                     throw new ArgumentException("Error: the output file should be a JSON file");
-                }*/
+                }
             }
         }
+    }
 }

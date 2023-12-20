@@ -7,35 +7,35 @@ class Program
     static async Task Main(string[] args)
     { 
         string serverAddress = "http://localhost:50051";
-        string[] argsMano = { "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\test-param1.json", "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\MarketData.csv" };
+        string[] argsMano = { "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\test-param5.json", "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\MarketDataVanilla.csv", "C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\portfolio5.json" };
         Input input = new(argsMano);
         DataUtilities dataUtilities = new(input);
         double[] spots = dataUtilities.GetSpots(dataUtilities.MarketData[0].Date);
         List<List<double>> past = new() { spots.ToList() };
         List<DateTime> dates = dataUtilities.GetDateTimes(dataUtilities.MarketData);
-        Pricer priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, true, 0, past);
-        if (priceAndDeltaInfo != null)
-        {
-            Console.WriteLine($"Price Call Vanille: {priceAndDeltaInfo.Price}");
-        }
+        bool isMonitoringDate = false;
+        double elapsedTime = 0.0;
+        Pricer priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, isMonitoringDate, elapsedTime, past);
         ComputationUtilities computationUtilities = new(priceAndDeltaInfo, dataUtilities);
-        List<DateTime> dateTimes = dataUtilities.GetDateTimes(dataUtilities.MarketData);
-        var marketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dateTimes[0]);
+        var marketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[0]);
         Handler handler = new(computationUtilities, marketDataCurrDate);
         List<OutputData> outputDatas = new();
 
-        for (int t = 1; t < dateTimes.Count; t++)
+        for (int t = 1; t < dates.Count; t++)
         {
-            handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dateTimes[t]);
+            computationUtilities.UpdateGetPriceAndDeltasAsyncParameters(dates[t], t, isMonitoringDate, elapsedTime, past);
+            priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, isMonitoringDate, elapsedTime, past);
+            handler.ComputationUtilities.Pricer = priceAndDeltaInfo;
+            handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[t]);
             if (computationUtilities.RebalancingTime(t))
             {
                 handler.GetPortfolioValue();
                 handler.UpdateCompo();
                 handler.AddOutputData(outputDatas);
-                handler.MarketDataPrevDate = dataUtilities.GetDataFeedForOneDate(dateTimes[t]);
+                handler.MarketDataPrevDate = dataUtilities.GetDataFeedForOneDate(dates[t]);
             }
         }
-        //File.WriteAllText(dataUtilities.Input.OutputFilePath, DataUtilities.GetJsonFromObject(outputDatas));
+        File.WriteAllText(dataUtilities.Input.OutputFilePath, dataUtilities.ExportOutputDatas(outputDatas));
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey();
     }
