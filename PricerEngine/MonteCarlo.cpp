@@ -31,7 +31,7 @@ MonteCarlo::price(double& prix, double& std_dev)
     }
     pnl_mat_free(&path);
     prix = factor * sum / nbSamples_;
-    squareSum = ((factor * factor * squareSum) / nbSamples_) - prix * prix;
+    squareSum = ((pow(factor, 2) * squareSum) / nbSamples_) - prix * prix;
     std_dev = sqrt(squareSum / nbSamples_);
     double lower_bound = prix - 1.96 * std_dev / sqrt(nbSamples_);
     double upper_bound = prix + 1.96 * std_dev / sqrt(nbSamples_);
@@ -44,7 +44,7 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev)
     double squareSum = 0;
     double currentPayoff;
     PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
-    double factor = exp(-(mod_->r_) * (opt_->T_));
+    double factor = exp(-(mod_->r_) * (opt_->T_ - t));
     for (int i = 0; i <= nbSamples_; i++) {
         mod_->asset(path, t, opt_->T_, opt_->nbTimeSteps_, rng_, past);
         currentPayoff = opt_->payoff(path);
@@ -52,8 +52,8 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev)
         squareSum += currentPayoff * currentPayoff;
     }
     pnl_mat_free(&path);
-    prix = factor * sum / nbSamples_;
-    squareSum = squareSum / nbSamples_ - prix * prix;
+    prix = factor*sum / nbSamples_;
+    squareSum = (pow(factor, 2)*squareSum) / nbSamples_ - prix * prix;
     std_dev = sqrt(squareSum / nbSamples_);
     double lower_bound = prix - 1.96 * std_dev / sqrt(nbSamples_);
     double upper_bound = prix + 1.96 * std_dev / sqrt(nbSamples_);
@@ -129,7 +129,7 @@ MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev
     PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
     PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
     double timeStep = (opt_->T_ / opt_->nbTimeSteps_);
-    double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (nbSamples_ * 2 * fdStep_);
+    double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (2 * fdStep_);
     double interSquare;
     double payoffShiftPlus, payoffShiftMinus;
     PnlVect *diffShift = pnl_vect_create(opt_->size_);
@@ -155,14 +155,23 @@ MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev
             pnl_vect_set(std_dev, k, pnl_vect_get(std_dev, k) + interSquare);
         }
         pnl_vect_plus_vect(delta, diffShift);
-        pnl_vect_mult_vect_term(diffShift, diffShift);
-        pnl_mat_set_row(deltasMat, diffShift, i);
     }
 
     PnlVect *lastRow = pnl_vect_create(opt_->size_);
     pnl_mat_get_row(lastRow, past, past->m - 1);
-    pnl_vect_mult_scalar(delta, commonFactor);
+    pnl_vect_mult_scalar(delta, commonFactor/nbSamples_);
     pnl_vect_div_vect_term(delta, lastRow);
+
+    double tmp = 0;
+    double currentAsset = 0;
+    double currentDelta = 0;
+    for (int i = 0; i < opt_->size_; i++) {
+        tmp = GET(std_dev, i);
+        currentAsset = GET(lastRow, i);
+        currentDelta = GET(delta, i);
+        tmp = tmp * pow(commonFactor, 2) / (pow(currentAsset, 2) * nbSamples_) - pow(currentDelta, 2);
+        pnl_vect_set(std_dev, i, sqrt(tmp / nbSamples_)) ;
+    }
 
 
     pnl_mat_free(&shiftMinus);

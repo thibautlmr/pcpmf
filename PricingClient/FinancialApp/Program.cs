@@ -22,7 +22,7 @@ class Program
         List<DateTime> dateTimes = dataUtilities.GetDateTimes(dataUtilities.MarketData);
         var marketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dateTimes[0]);
         Handler handler = new(computationUtilities, marketDataCurrDate);
-        List<OutputData> outputDatas = new();
+        //List<OutputData> outputDatas = new();
 
         for (int t = 1; t < dateTimes.Count; t++)
         {
@@ -31,7 +31,7 @@ class Program
             {
                 handler.GetPortfolioValue();
                 handler.UpdateCompo();
-                handler.AddOutputData(outputDatas);
+                //handler.AddOutputData(outputDatas);
                 handler.MarketDataPrevDate = dataUtilities.GetDataFeedForOneDate(dateTimes[t]);
             }
         }
