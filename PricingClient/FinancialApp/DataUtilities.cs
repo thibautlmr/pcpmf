@@ -1,6 +1,5 @@
 ﻿using MarketData;
 using ParameterInfo;
-using ParameterInfo.RebalancingOracleDescriptions;
 using ParameterInfo.JsonUtils;
 
 namespace FinancialApp
@@ -42,7 +41,7 @@ namespace FinancialApp
 
         public List<string> GetIds()
         {
-            return MarketData[0].SpotList.Keys.ToList();
+            return new List<string>(MarketData[0].SpotList.Keys);
         }
 
         public double[] GetSpots(DateTime date)
@@ -56,6 +55,11 @@ namespace FinancialApp
                 spots[i] = marketDataCurrDate.SpotList[ids[i]];
             }
             return spots;
+        }
+
+        public string ExportOutputDatas(List<OutputData> outputDatas)
+        {
+            return JsonIO.ToJson(outputDatas);
         }
     }
 }

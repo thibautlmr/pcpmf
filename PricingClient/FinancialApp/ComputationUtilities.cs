@@ -35,7 +35,7 @@ namespace FinancialApp
             int numberOfDaysInOneYear = DataUtilities.TestParameters.NumberOfDaysInOneYear;
             MathDateConverter mathDateConverter = new(numberOfDaysInOneYear);
             double elapsedTime = mathDateConverter.ConvertToMathDistance(date1, date2);
-            return annualFreeRate * elapsedTime / numberOfDaysInOneYear;
+            return 1 + annualFreeRate * elapsedTime / numberOfDaysInOneYear;
         }
 
         public double[] GetDeltas()
@@ -78,6 +78,13 @@ namespace FinancialApp
             DateTime firstDate = DataUtilities.MarketData[0].Date;
             MathDateConverter mathDateConverter = new(numberOfDaysInOneYear);
             return mathDateConverter.ConvertToMathDistance(firstDate, date);
+        }
+
+        public void UpdateGetPriceAndDeltasAsyncParameters(DateTime date, int nthDate, bool isMonitoringDate, double elapsedTime, List<List<double>> past)
+        {
+            isMonitoringDate = IsMonitoringDateReached(date);
+            elapsedTime = GetElapsedTime(date);
+            past.Add(DataUtilities.GetSpots(DataUtilities.MarketData[nthDate].Date).ToList());
         }
     }
 }

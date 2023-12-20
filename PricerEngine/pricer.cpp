@@ -75,7 +75,7 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     mc->delta(pastTmp, 0, deltas, deltasStdDev);
     double delta;
     double expectedPrice;
-    pnl_cf_call_bs(100., strike, maturity, interestRate, 0., 0.2, &expectedPrice, &delta);
+    pnl_cf_call_bs(100., strike, maturity, interestRate, 0., 0.3, &expectedPrice, &delta);
     std::cout << "Le prix theorique de cette option en 0 est : " << expectedPrice << std::endl;
     std::cout << "Le prix obtenu de cette option en 0 est : " << price << std::endl;
     std::cout << "Le delta obtenu de cette option en 0 est : " << GET(deltas, 0) << std::endl;*/

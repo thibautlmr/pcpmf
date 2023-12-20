@@ -19,10 +19,10 @@ namespace FinancialApp
             ComputationUtilities = computationUtilities;
             MarketDataPrevDate = marketDataCurrDate;
             MarketDataCurrDate = marketDataCurrDate;
-            Portfolio = InitializePortfolioCompo();
             Ids = ComputationUtilities.DataUtilities.GetIds();
             PrevDate = MarketDataPrevDate.Date;
             CurrDate = MarketDataCurrDate.Date;
+            Portfolio = InitializePortfolioCompo();
         }
 
         private Portfolio InitializePortfolioCompo()
