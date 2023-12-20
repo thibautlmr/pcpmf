@@ -1,4 +1,4 @@
-﻿ using FinancialApp;
+﻿using FinancialApp;
 using ParameterInfo;
 using PricingClient;
 

@@ -74,7 +74,7 @@ target_link_libraries(pricer_grpc_proto
     ${_PROTOBUF_LIBPROTOBUF}
 )
 
-add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp Option.cpp BlackScholesModel.cpp JsonReaderUtils.cpp Option.cpp MonteCarlo.cpp VanillaOption.cpp GrpcServerUtil.cpp)
+add_executable(pricing_server pricing_server.cpp pricer.cpp json_reader.cpp Option.cpp BlackScholesModel.cpp JsonReaderUtils.cpp Option.cpp MonteCarlo.cpp VanillaOption.cpp)
 target_link_libraries(pricing_server
     pricer_grpc_proto
     ${_REFLECTION}
