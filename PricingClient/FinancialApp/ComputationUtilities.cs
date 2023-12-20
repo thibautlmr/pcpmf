@@ -35,7 +35,7 @@ namespace FinancialApp
             int numberOfDaysInOneYear = DataUtilities.TestParameters.NumberOfDaysInOneYear;
             MathDateConverter mathDateConverter = new(numberOfDaysInOneYear);
             double elapsedTime = mathDateConverter.ConvertToMathDistance(date1, date2);
-            return 1 + annualFreeRate * elapsedTime / numberOfDaysInOneYear;
+            return annualFreeRate * elapsedTime / numberOfDaysInOneYear;
         }
 
         public double[] GetDeltas()
