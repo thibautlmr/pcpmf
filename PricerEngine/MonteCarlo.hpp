@@ -47,7 +47,7 @@ class MonteCarlo
      * @param[out] delta contient le vecteur de delta
      * @param[out] std_dev contient l'écart type de l'estimateur
      */
-    void delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev);
+    void delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev, bool isMonitoringDate);
 
     /**
      * Calcule le delta de l'option à la date 0

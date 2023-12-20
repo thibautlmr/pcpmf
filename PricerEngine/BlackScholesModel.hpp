@@ -18,9 +18,10 @@ class BlackScholesModel
     double rho_;       /// paramètre de corrélation
     PnlVect* sigma_;   /// vecteur de volatilités
     PnlVect* spot_;    /// valeurs initiales des sous-jacents
-    PnlMat* cholesky_; /// matrice de cholesky de la matrice de corrélation
+    PnlMat* vol_cholesky_; ///
+    PnlVect *paymentDates_;
 
-    BlackScholesModel(int size_, double r_, double rho_, const PnlVect* sigma_, const PnlVect* spot_);
+    BlackScholesModel(int size_, double r_, double rho_, const PnlVect* sigma_, const PnlVect* spot_, const PnlMat* vol_cholesky_, const PnlVect* paymentDates_);
 
     ~BlackScholesModel();
     /**
@@ -31,7 +32,9 @@ class BlackScholesModel
      * @param[in] T  maturité
      * @param[in] nbTimeSteps nombre de dates de constatation
      */
-    void asset(PnlMat* path, double T, int nbTimeSteps, PnlRng* rng);
+    void asset(PnlMat *path, double T, int nbTimeSteps, PnlRng *rng);
+
+    void asset(PnlMat *path, double t, double T, PnlRng *rng, const PnlMat *past, bool isMonitoringDate);
 
     /**
      * Calcule une trajectoire du modèle connaissant le
@@ -59,7 +62,7 @@ class BlackScholesModel
      * @param[in] d indice du sous-jacent à shifter
      * @param[in] timestep pas de constatation du sous-jacent
      */
-    void shiftAsset(PnlMat* shift_path, const PnlMat* path, int d, double h, double t, double timestep);
+    void shiftAsset(PnlMat* shift_path, const PnlMat* path, int d, double h, double t, bool isMonitoringDate);
 
   private:
     PnlVect* sCurrent_;

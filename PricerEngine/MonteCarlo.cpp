@@ -122,13 +122,12 @@ MonteCarlo::delta(PnlVect* delta, PnlVect* std_dev)
 }
 
 void
-MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev)
+MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev, bool isMonitoringDate)
 {
 
     PnlMat *path = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
     PnlMat *pathCopy = pnl_mat_create(opt_->nbTimeSteps_ + 1, opt_->size_);
     PnlMat *deltasMat = pnl_mat_create(nbSamples_, opt_->size_);
-    double timeStep = (opt_->T_ / opt_->nbTimeSteps_);
     double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (2 * fdStep_);
     double interSquare;
     double payoffShiftPlus, payoffShiftMinus;
@@ -145,8 +144,8 @@ MonteCarlo::delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev
         pnl_mat_clone(pathCopy, path);
 
         for (int k = 0; k < mod_->size_; k++) {
-            mod_->shiftAsset(shiftPlus, pathCopy, k, fdStep_, t, timeStep);
-            mod_->shiftAsset(shiftMinus, pathCopy, k, -fdStep_, t, timeStep);
+            mod_->shiftAsset(shiftPlus, pathCopy, k, fdStep_, t, isMonitoringDate);
+            mod_->shiftAsset(shiftMinus, pathCopy, k, -fdStep_, t, isMonitoringDate);
             payoffShiftPlus = opt_->payoff(shiftPlus);
             payoffShiftMinus = opt_->payoff(shiftMinus);
             pnl_vect_set(diffShift, k, payoffShiftPlus - payoffShiftMinus);
