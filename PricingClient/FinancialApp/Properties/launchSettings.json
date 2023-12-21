@@ -2,7 +2,7 @@
   "profiles": {
     "FinancialApp": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\test-param5.json\"\r\n\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\\\MarketDataVanilla.csv\"\r\n\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\portfolio5.json\""
+      "commandLineArgs": "\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\params\\test-param5.json\"\r\n\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\params\\MarketData.csv\"\r\n\"C:\\Users\\Erwan Izenic\\Documents\\COURS_3A\\pcpmf\\pcpmfProject\\portfolio5.json\""
     }
   }
 }
