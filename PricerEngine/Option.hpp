@@ -2,7 +2,6 @@
 
 #include "pnl/pnl_vector.h"
 #include "pnl/pnl_matrix.h"
-#include "JsonReaderUtils.hpp"
 
 /// \brief Classe Option abstraite
 class Option
@@ -13,9 +12,8 @@ class Option
 
     Option(double T, int size);
 
-    //~Option();
+    ~Option();
 
-    Option(char* jsonPath);
     /**
      * Calcule la valeur du payoff sur la trajectoire
      *
