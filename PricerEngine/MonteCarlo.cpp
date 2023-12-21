@@ -32,7 +32,7 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev, b
     pnl_mat_free(&path);
     prix = factor * sum / nbSamples_;
     squareSum = (pow(factor, 2) * squareSum) / nbSamples_ - prix * prix;
-    std_dev = sqrt(squareSum / nbSamples_);
+    std_dev = sqrt(abs(squareSum / nbSamples_));
 }
 
 

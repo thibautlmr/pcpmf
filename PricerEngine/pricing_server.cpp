@@ -65,9 +65,9 @@ public:
             output->add_deltas(GET(delta, i));
             output->add_deltasstddev(GET(deltaStdDev, i));
         }
-        //pnl_mat_free(&past);
-        //pnl_vect_free(&delta);
-        //pnl_vect_free(&deltaStdDev);
+        pnl_mat_free(&past);
+        pnl_vect_free(&delta);
+        pnl_vect_free(&deltaStdDev);
         return Status::OK;
     }
 

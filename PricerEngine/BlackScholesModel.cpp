@@ -1,16 +1,15 @@
 #include "BlackScholesModel.hpp"
 
 // Constructeur de la classe
-BlackScholesModel::BlackScholesModel(int size, double r, const PnlVect* sigma, const PnlVect* spot, const PnlMat* vol_cholesky, const PnlVect* paymentDates)
+BlackScholesModel::BlackScholesModel(int size, double r, const PnlVect* sigma, const PnlMat* vol_cholesky, const PnlVect* paymentDates)
   : size_(size)
   , r_(r)
 {
     sigma_ = pnl_vect_copy(sigma);
-    spot_ = pnl_vect_copy(spot);
     vol_cholesky_ = pnl_mat_copy(vol_cholesky);
     paymentDates_ = pnl_vect_copy(paymentDates);
-    sCurrent_ = pnl_vect_copy(spot_);
-    sNext_ = pnl_vect_copy(spot_);
+    sCurrent_ = pnl_vect_create_from_zero(size_);
+    sNext_ = pnl_vect_copy(sCurrent_);
     G_ = pnl_vect_create_from_zero(size_);
     choleskyRow_ = pnl_vect_create_from_zero(size_);
     tmpG_ = pnl_vect_create_from_zero(size_);
@@ -21,7 +20,6 @@ BlackScholesModel::BlackScholesModel(int size, double r, const PnlVect* sigma, c
 BlackScholesModel::~BlackScholesModel()
 {
     pnl_vect_free(&sigma_);
-    pnl_vect_free(&spot_);
     pnl_vect_free(&G_);
     pnl_vect_free(&choleskyRow_);
     pnl_vect_free(&tmpG_);
@@ -40,10 +38,9 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
     int followingMonitoringIndex = 0;
     double assetCurrentValue, drift, assetNextValue;
 
-    PnlVect *S_current = pnl_vect_create_from_zero(d);
     double nbPast = past->m;
-    pnl_mat_get_row(S_current, past, nbPast - 1);
-    PnlVect *S_next = pnl_vect_copy(S_current);
+    pnl_mat_get_row(sCurrent_, past, nbPast - 1);
+    sNext_ = pnl_vect_copy(sCurrent_);
     PnlVect *currentVect = pnl_vect_create_from_zero(d);
 
     // Remplissage de path avec le past
@@ -63,7 +60,7 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
         pnl_vect_rng_normal_d(G_, size_, rng);
         for (int j = 0; j < d; j++) {
 
-            assetCurrentValue = pnl_vect_get(S_current, j);
+            assetCurrentValue = pnl_vect_get(sCurrent_, j);
 
             // Calcul de la prochaine valeur de trajectoire pour l'actif considéré
             drift = (r_ - (pnl_vect_get(sigma_, j) * pnl_vect_get(sigma_, j)) / 2) * (step);
@@ -74,12 +71,12 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
 
             assetNextValue = assetCurrentValue * exp(drift + sqrt(step) * pnl_vect_sum(tmpG_));
 
-            pnl_vect_set(S_next, j, assetNextValue);
+            pnl_vect_set(sNext_, j, assetNextValue);
         }
         // Actualisation des tableaux
-        S_current = pnl_vect_copy(S_next);
+        sCurrent_ = pnl_vect_copy(sNext_);
         // Remplissage de la matrice de trajectoires
-        pnl_mat_set_row(path, S_next, nbPast - 1);
+        pnl_mat_set_row(path, sNext_, nbPast - 1);
     }
 
     // Boucle sur le temps
@@ -89,7 +86,7 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
         pnl_vect_rng_normal_d(G_, size_, rng);
         for (int j = 0; j < d; j++) {
 
-            assetCurrentValue = pnl_vect_get(S_current, j);
+            assetCurrentValue = pnl_vect_get(sCurrent_, j);
 
             // Calcul de la prochaine valeur de trajectoire pour l'actif considéré
             drift = (r_ - (pnl_vect_get(sigma_, j) * pnl_vect_get(sigma_, j)) / 2) * (step);
@@ -100,12 +97,12 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
 
             assetNextValue = assetCurrentValue * exp(drift + sqrt(step) * pnl_vect_sum(tmpG_));
 
-            pnl_vect_set(S_next, j, assetNextValue);
+            pnl_vect_set(sNext_, j, assetNextValue);
         }
         // Actualisation des tableaux
-        S_current = pnl_vect_copy(S_next);
+        sCurrent_ = pnl_vect_copy(sNext_);
         // Remplissage de la matrice de trajectoires
-        pnl_mat_set_row(path, S_next, i);
+        pnl_mat_set_row(path, sNext_, i);
     }
 }
 

@@ -5,6 +5,7 @@
 #include "MonteCarlo.hpp"
 #include "Option.hpp"
 #include "VanillaOption.hpp"
+#include "ConditionalCall.hpp"
 #include "pnl/pnl_finance.h"
 
 BlackScholesPricer::BlackScholesPricer(nlohmann::json &jsonParams) {
@@ -36,21 +37,39 @@ void BlackScholesPricer::print() {
 }
 
 void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, bool isMonitoringDate, double &price, double &priceStdDev, PnlVect* &deltas, PnlVect* &deltasStdDev) {
+    //price = 0.;
+    //priceStdDev = 0.;
+    //deltas = pnl_vect_create_from_zero(nAssets);
+    //deltasStdDev = pnl_vect_create_from_zero(nAssets);
+    //PnlVect *sigma = pnl_vect_create_from_scalar(1, MGET(volatility, 0, 0));
+    //PnlVect *spot = pnl_vect_create_from_zero(nAssets);
+    //pnl_mat_get_row(spot, past, 0);
+    //BlackScholesModel *bsm = new BlackScholesModel(nAssets, interestRate, sigma, spot, volatility, paymentDates);
+    //double maturity = GET(paymentDates, paymentDates->size-1);
+    //double strike = GET(strikes, 0);
+    //VanillaOption *opt = new VanillaOption(maturity, 1, strike);
+    //PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
+    //pnl_rng_sseed(rng, time(NULL));
+    //MonteCarlo *mc = new MonteCarlo(bsm, opt, rng, fdStep, nSamples);
+    //mc->price(past, currentDate, price, priceStdDev, isMonitoringDate);
+    //mc->delta(past, currentDate, deltas, deltasStdDev, isMonitoringDate);
+
     price = 0.;
     priceStdDev = 0.;
     deltas = pnl_vect_create_from_zero(nAssets);
     deltasStdDev = pnl_vect_create_from_zero(nAssets);
-    PnlVect *sigma = pnl_vect_create_from_scalar(1, MGET(volatility, 0, 0));
-    PnlVect *spot = pnl_vect_create_from_zero(nAssets);
-    pnl_mat_get_row(spot, past, 0);
-    BlackScholesModel *bsm = new BlackScholesModel(nAssets, interestRate, sigma, spot, volatility, paymentDates);
-    double maturity = GET(paymentDates, paymentDates->size-1);
-    double strike = GET(strikes, 0);
-    VanillaOption *opt = new VanillaOption(maturity, 1, strike);
+    PnlVect *sigma = pnl_vect_create_from_zero(nAssets);
+    PnlVect *volTmp = pnl_vect_create_from_zero(nAssets);
+    for (int i = 0; i < nAssets; i++) {
+        pnl_mat_get_row(volTmp, volatility, i);
+        pnl_vect_set(sigma, i, pnl_vect_norm_two(volTmp));
+    }
+    BlackScholesModel *bsm = new BlackScholesModel(nAssets, interestRate, sigma, volatility, paymentDates);
+    double maturity = GET(paymentDates, paymentDates->size - 1);
+    ConditionalCall *opt = new ConditionalCall(maturity, nAssets, interestRate, strikes, paymentDates, isMonitoringDate);
     PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
     pnl_rng_sseed(rng, time(NULL));
     MonteCarlo *mc = new MonteCarlo(bsm, opt, rng, fdStep, nSamples);
     mc->price(past, currentDate, price, priceStdDev, isMonitoringDate);
     mc->delta(past, currentDate, deltas, deltasStdDev, isMonitoringDate);
-
 }

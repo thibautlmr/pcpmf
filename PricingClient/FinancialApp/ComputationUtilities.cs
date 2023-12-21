@@ -83,7 +83,24 @@ namespace FinancialApp
             isMonitoringDate = IsMonitoringDateReached(date);
             elapsedTime = GetElapsedTime(date);
             past.Clear();
-            past.Add(DataUtilities.GetSpots(DataUtilities.MarketData[nthDate].Date).ToList());
+            int i = 0;
+            DateTime currentPaymentDate = DataUtilities.TestParameters.PayoffDescription.PaymentDates[i];
+            while (currentPaymentDate <= date)
+            {
+                for (int j = 0; j < nthDate; j++)
+                {
+                    if (DataUtilities.GetDateTimes(DataUtilities.MarketData)[j] == currentPaymentDate)
+                    {
+                        past.Add(DataUtilities.GetSpots(DataUtilities.MarketData[j].Date).ToList());
+                    }
+                }
+                i++;
+                currentPaymentDate = DataUtilities.TestParameters.PayoffDescription.PaymentDates[i];
+            }
+            if (!isMonitoringDate)
+            {
+                past.Add(DataUtilities.GetSpots(DataUtilities.MarketData[nthDate].Date).ToList());
+            } 
         }
     }
 }

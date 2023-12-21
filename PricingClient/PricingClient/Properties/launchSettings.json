@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PricingClient": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\MarketData.csv\"\r\n\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\params\\test-param4.json\"\r\n\"C:\\Users\\lamur\\Documents\\3aif\\pcpmf\\pcpmf-project\\portfolio4.json\""
+    }
+  }
+}

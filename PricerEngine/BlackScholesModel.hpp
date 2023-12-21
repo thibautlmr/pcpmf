@@ -16,11 +16,10 @@ class BlackScholesModel
     int size_;         /// nombre d'actifs du modèle
     double r_;         /// taux d'intérêt
     PnlVect* sigma_;   /// vecteur de volatilités
-    PnlVect* spot_;    /// valeurs initiales des sous-jacents
     PnlMat* vol_cholesky_; ///
     PnlVect *paymentDates_;
 
-    BlackScholesModel(int size_, double r_, const PnlVect* sigma_, const PnlVect* spot_, const PnlMat* vol_cholesky_, const PnlVect* paymentDates_);
+    BlackScholesModel(int size_, double r_, const PnlVect* sigma_, const PnlMat* vol_cholesky_, const PnlVect* paymentDates_);
 
     ~BlackScholesModel();
     /**

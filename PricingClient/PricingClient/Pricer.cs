@@ -18,7 +18,7 @@ namespace PricingClient
             Price = pricingOutput.Price;
             PriceStdDev = pricingOutput.PriceStdDev;
             Deltas = pricingOutput.Deltas.ToList();
-            DeltasStdDev = pricingOutput.Deltas.ToList();
+            DeltasStdDev = pricingOutput.DeltasStdDev.ToList();
         }
     }
 }
