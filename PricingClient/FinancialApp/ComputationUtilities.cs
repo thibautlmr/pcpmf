@@ -33,8 +33,7 @@ namespace FinancialApp
             string domesticCurrencyId = DataUtilities.TestParameters.AssetDescription.DomesticCurrencyId;
             double annualFreeRate = DataUtilities.TestParameters.AssetDescription.CurrencyRates[domesticCurrencyId];
             int numberOfDaysInOneYear = DataUtilities.TestParameters.NumberOfDaysInOneYear;
-            MathDateConverter mathDateConverter = new(numberOfDaysInOneYear);
-            double elapsedTime = mathDateConverter.ConvertToMathDistance(date1, date2);
+            double elapsedTime = DayCount.CountBusinessDays(date1, date2);
             return annualFreeRate * elapsedTime / numberOfDaysInOneYear;
         }
 
