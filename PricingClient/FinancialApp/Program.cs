@@ -30,7 +30,6 @@ class Program
                 handler.ComputationUtilities.Pricer = priceAndDeltaInfo;
                 handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[t]);
                 handler.CurrDate = dates[t];
-                handler.GetPortfolioValue();
                 handler.UpdateCompo();
                 handler.AddOutputData(outputDatas);
                 handler.MarketDataPrevDate = dataUtilities.GetDataFeedForOneDate(dates[t]);

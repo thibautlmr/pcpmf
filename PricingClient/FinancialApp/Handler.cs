@@ -50,13 +50,14 @@ namespace FinancialApp
 
                 portfolioValue += Portfolio.Composition[Ids[i]] * MarketDataCurrDate.SpotList[Ids[i]];
             }
-            Portfolio.FreeRate = ComputationUtilities.GetFreeRateBetweenTwoDates(PrevDate, CurrDate);
-            portfolioValue += Portfolio.FreeRateQuantity * (1 + Portfolio.FreeRate);
+            portfolioValue += Portfolio.FreeRateQuantity;
             return portfolioValue;
         }
 
         public void UpdateCompo()
         {
+            Portfolio.FreeRate = ComputationUtilities.GetFreeRateBetweenTwoDates(PrevDate, CurrDate);
+            Portfolio.FreeRateQuantity *= (1 + Portfolio.FreeRate);
             double total = GetPortfolioValue();
             for (int i = 0; i < MarketDataCurrDate.SpotList.Count; i++)
             {
@@ -64,7 +65,6 @@ namespace FinancialApp
                 total -= Portfolio.Composition[Ids[i]] * MarketDataCurrDate.SpotList[Ids[i]];
             }
             Portfolio.FreeRateQuantity = total;
-            Portfolio.FreeRate = ComputationUtilities.GetFreeRateBetweenTwoDates(PrevDate, CurrDate);
         }
 
         public void AddOutputData(List<OutputData> outputDatas)

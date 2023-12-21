@@ -1,0 +1,16 @@
+{
+    "VolCholeskyLines": [
+        [
+            0.3
+        ]
+    ],
+    "MathPaymentDates": [
+        1
+    ],
+    "Strikes": [
+        10
+    ],
+    "DomesticInterestRate": 0.095,
+    "RelativeFiniteDifferenceStep": 0.1,
+    "SampleNb": 10000
+}
