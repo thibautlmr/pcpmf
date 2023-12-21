@@ -20,7 +20,7 @@ class Program
         Handler handler = new(computationUtilities, marketDataCurrDate);
         List<OutputData> outputDatas = new();
         handler.AddOutputData(outputDatas);
-        for (int t = 1; t < dates.Count; t++)
+        for (int t = 1; t < 110; t++)
         {
             handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[t]);
             if (computationUtilities.RebalancingTime(t))

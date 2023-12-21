@@ -9,7 +9,6 @@ ConditionalCall::ConditionalCall(double T, int size, double r, PnlVect* strikes,
     strikes_ = pnl_vect_copy(strikes);
     paymentDates_ = pnl_vect_copy(paymentDates);
     isMonitoringDate_ = isMonitoringDate;
-
 }
 
 double

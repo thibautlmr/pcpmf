@@ -4,9 +4,9 @@
 class VanillaOption : public Option
 {
   public:
-    float strike_;
+    double strike_;
 
-    VanillaOption(double T, int size, float strike);
+    VanillaOption(double T, int size, double strike);
 
     VanillaOption(char* jsonPath);
 

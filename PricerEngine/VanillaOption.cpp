@@ -1,6 +1,6 @@
 #include "VanillaOption.hpp"
 
-VanillaOption::VanillaOption(double T, int size, float strike)
+VanillaOption::VanillaOption(double T, int size, double strike)
   : Option(T, size)
 {
     strike_ = strike;

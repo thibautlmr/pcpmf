@@ -1,10 +1,9 @@
 #include "BlackScholesModel.hpp"
 
 // Constructeur de la classe
-BlackScholesModel::BlackScholesModel(int size, double r, double rho, const PnlVect* sigma, const PnlVect* spot, const PnlMat* vol_cholesky, const PnlVect* paymentDates)
+BlackScholesModel::BlackScholesModel(int size, double r, const PnlVect* sigma, const PnlVect* spot, const PnlMat* vol_cholesky, const PnlVect* paymentDates)
   : size_(size)
   , r_(r)
-  , rho_(rho)
 {
     sigma_ = pnl_vect_copy(sigma);
     spot_ = pnl_vect_copy(spot);
@@ -115,7 +114,6 @@ BlackScholesModel::shiftAsset(PnlMat* shiftPath, const PnlMat* path, int d, doub
 {
 
     // Initialisation des varaibles
-    int nbTimeSteps = path->m - 1;
     int dMax = path->n;
     int startingShiftIndex = shiftPath->m - 1;
     pnl_mat_clone(shiftPath, path);
@@ -127,12 +125,6 @@ BlackScholesModel::shiftAsset(PnlMat* shiftPath, const PnlMat* path, int d, doub
     }
 
     // Calcul de l'indice de début de shift
-
-    /*startingShiftIndex = ceil(t / timestep);*/
-    /*if (abs(t - timestep) < pow(10, -6)) {
-        startingShiftIndex -= 1;
-    }*/
-    
     if (isMonitoringDate) {
         for (int i = 0; i < paymentDates_->size - 1; i++) {
             if (abs(GET(paymentDates_, i)) < pow(10, -6)) {

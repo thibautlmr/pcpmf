@@ -42,13 +42,11 @@ class MonteCarlo
      */
     void delta(const PnlMat* past, double t, PnlVect* delta, PnlVect* std_dev, bool isMonitoringDate);
 
+    //double p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init);
 
+    //void updatePast(PnlMat* past, double t, int index, PnlMat* marketData, bool& lastWasDiscretizationTime);
 
-    double p_and_l(PnlMat* marketData, double hedgingNumber, double& prix_init);
-
-    void updatePast(PnlMat* past, double t, int index, PnlMat* marketData, bool& lastWasDiscretizationTime);
-
-    void buildPath(PnlMat* path, PnlMat* marketData, double hedgingNumber);
+    //void buildPath(PnlMat* path, PnlMat* marketData, double hedgingNumber);
 
     PnlMat* path_;
     PnlVect* payoffs_;
