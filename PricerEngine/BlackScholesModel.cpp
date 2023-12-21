@@ -11,9 +11,9 @@ BlackScholesModel::BlackScholesModel(int size, double r, const PnlVect* sigma, c
     paymentDates_ = pnl_vect_copy(paymentDates);
     sCurrent_ = pnl_vect_copy(spot_);
     sNext_ = pnl_vect_copy(spot_);
-    G_ = pnl_vect_create(size_);
-    choleskyRow_ = pnl_vect_create(size_);
-    tmpG_ = pnl_vect_create(size_);
+    G_ = pnl_vect_create_from_zero(size_);
+    choleskyRow_ = pnl_vect_create_from_zero(size_);
+    tmpG_ = pnl_vect_create_from_zero(size_);
     column_ = pnl_mat_new();
 }
 
@@ -40,11 +40,11 @@ BlackScholesModel::asset(PnlMat* path, double t, double T, PnlRng* rng, const Pn
     int followingMonitoringIndex = 0;
     double assetCurrentValue, drift, assetNextValue;
 
-    PnlVect *S_current = pnl_vect_create(d);
+    PnlVect *S_current = pnl_vect_create_from_zero(d);
     double nbPast = past->m;
     pnl_mat_get_row(S_current, past, nbPast - 1);
     PnlVect *S_next = pnl_vect_copy(S_current);
-    PnlVect *currentVect = pnl_vect_create(d);
+    PnlVect *currentVect = pnl_vect_create_from_zero(d);
 
     // Remplissage de path avec le past
     for (int i = 0; i < nbPast - 1; i++) {

@@ -51,7 +51,7 @@ namespace FinancialApp
                 portfolioValue += Portfolio.Composition[Ids[i]] * MarketDataCurrDate.SpotList[Ids[i]];
             }
             Portfolio.FreeRate = ComputationUtilities.GetFreeRateBetweenTwoDates(PrevDate, CurrDate);
-            portfolioValue += Math.Exp(Portfolio.FreeRate) * Portfolio.FreeRateQuantity;
+            portfolioValue += Portfolio.FreeRateQuantity * (1 + Portfolio.FreeRate);
             return portfolioValue;
         }
 

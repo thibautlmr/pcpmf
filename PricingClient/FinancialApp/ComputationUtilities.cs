@@ -33,8 +33,8 @@ namespace FinancialApp
             string domesticCurrencyId = DataUtilities.TestParameters.AssetDescription.DomesticCurrencyId;
             double annualFreeRate = DataUtilities.TestParameters.AssetDescription.CurrencyRates[domesticCurrencyId];
             int numberOfDaysInOneYear = DataUtilities.TestParameters.NumberOfDaysInOneYear;
-            double elapsedTime = DayCount.CountBusinessDays(date1, date2);
-            return annualFreeRate * elapsedTime / numberOfDaysInOneYear;
+            MathDateConverter mathDateConverter = new(numberOfDaysInOneYear);
+            return annualFreeRate * mathDateConverter.ConvertToMathDistance(date1, date2);
         }
 
         public double[] GetDeltas()
@@ -45,7 +45,6 @@ namespace FinancialApp
         public double[] GetDeltaStdDev()
         {
             return Pricer.DeltasStdDev.ToArray();
-
         }
 
         public double GetPrice()
@@ -79,10 +78,11 @@ namespace FinancialApp
             return mathDateConverter.ConvertToMathDistance(firstDate, date);
         }
 
-        public void UpdateGetPriceAndDeltasAsyncParameters(DateTime date, int nthDate, ref bool isMonitoringDate, ref double elapsedTime, List<List<double>> past)
+        public void UpdateGetPriceAndDeltasAsyncParameters(DateTime date, int nthDate, ref bool isMonitoringDate, ref double elapsedTime, ref List<List<double>> past)
         {
             isMonitoringDate = IsMonitoringDateReached(date);
             elapsedTime = GetElapsedTime(date);
+            past.Clear();
             past.Add(DataUtilities.GetSpots(DataUtilities.MarketData[nthDate].Date).ToList());
         }
     }

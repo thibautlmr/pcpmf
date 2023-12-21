@@ -40,8 +40,6 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     priceStdDev = 0.;
     deltas = pnl_vect_create_from_zero(nAssets);
     deltasStdDev = pnl_vect_create_from_zero(nAssets);
-
-
     PnlVect *sigma = pnl_vect_create_from_scalar(1, MGET(volatility, 0, 0));
     PnlVect *spot = pnl_vect_create_from_zero(nAssets);
     pnl_mat_get_row(spot, past, 0);
@@ -55,24 +53,18 @@ void BlackScholesPricer::priceAndDeltas(const PnlMat *past, double currentDate, 
     mc->price(past, currentDate, price, priceStdDev, isMonitoringDate);
     mc->delta(past, currentDate, deltas, deltasStdDev, isMonitoringDate);
 
-    /*double maturity = GET(this->paymentDates, 0);
-    double strike = GET(this->strikes, 0);
-    double interestRate = this->interestRate;
-    PnlMat *pastTmp = pnl_mat_create_from_scalar(1, 1, 100);
-    PnlVect *spot = pnl_vect_create_from_scalar(1, 100);
-    PnlVect *vol = pnl_vect_create_from_scalar(1, MGET(this->volatility, 0, 0));
-    BlackScholesModel *bsm = new BlackScholesModel(1, interestRate, 1., vol, spot);
-    VanillaOption *option = new VanillaOption(maturity, 250, 1, strike);
-    PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
-    pnl_rng_sseed(rng, time(NULL));
-    MonteCarlo *mc = new MonteCarlo(bsm, option, rng, this->fdStep, this->nSamples);
-    mc->price(pastTmp, 0, price, priceStdDev);
-    mc->delta(pastTmp, 0, deltas, deltasStdDev);
-    double delta;
-    double expectedPrice;
-    pnl_cf_call_bs(100., strike, maturity, interestRate, 0., 0.3, &expectedPrice, &delta);
-    std::cout << "Le prix theorique de cette option en 0 est : " << expectedPrice << std::endl;
-    std::cout << "Le prix obtenu de cette option en 0 est : " << price << std::endl;
-    std::cout << "Le delta obtenu de cette option en 0 est : " << GET(deltas, 0) << std::endl;*/
-
+    //double maturity = GET(paymentDates, 0);
+    //double strike = GET(strikes, 0);
+    //PnlMat *pastTmp = pnl_mat_create_from_scalar(1, 1, 100);
+    //PnlVect *spot = pnl_vect_create_from_scalar(1, 100);
+    //PnlVect *vol = pnl_vect_create_from_scalar(1, MGET(volatility, 0, 0));
+    //BlackScholesModel *bsm = new BlackScholesModel(nAssets, interestRate, pnl_vect_create_from_scalar(1, MGET(volatility, 0, 0)), spot, volatility, paymentDates);
+    //VanillaOption *option = new VanillaOption(maturity, 1, strike);
+    //PnlRng *rng = pnl_rng_create(PNL_RNG_MERSENNE);
+    //pnl_rng_sseed(rng, time(NULL));
+    //MonteCarlo *mc = new MonteCarlo(bsm, option, rng, fdStep, nSamples);
+    //mc->price(pastTmp, 0, price, priceStdDev, isMonitoringDate);
+    //mc->delta(pastTmp, 0, deltas, deltasStdDev, isMonitoringDate);
+    //std::cout << "Le prix obtenu de cette option en 0 est : " << price << std::endl;
+    //std::cout << "Le delta obtenu de cette option en 0 est : " << GET(deltas, 0) << std::endl;
 }

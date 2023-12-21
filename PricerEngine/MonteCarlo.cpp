@@ -21,7 +21,7 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev, b
     double sum = 0;
     double squareSum = 0;
     double currentPayoff;
-    PnlMat *path = pnl_mat_create(opt_->size_, opt_->size_);
+    PnlMat *path = pnl_mat_create_from_zero(opt_->size_, opt_->size_);
     double factor = exp(-(mod_->r_) * (opt_->T_ - t));
     for (int i = 0; i <= nbSamples_; i++) {
         mod_->asset(path, t, opt_->T_, rng_, past, isMonitoringDate);
@@ -39,14 +39,14 @@ MonteCarlo::price(const PnlMat* past, double t, double& prix, double& std_dev, b
 
 void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *std_dev, bool isMonitoringDate) {
 
-    PnlMat *path = pnl_mat_create(opt_->size_, opt_->size_);
-    PnlMat *pathCopy = pnl_mat_create(opt_->size_, opt_->size_);
+    PnlMat *path = pnl_mat_create_from_zero(opt_->size_, opt_->size_);
+    PnlMat *pathCopy = pnl_mat_create_from_zero(opt_->size_, opt_->size_);
     double commonFactor = exp(-mod_->r_ * (opt_->T_ - t)) / (2 * fdStep_);
     double interSquare;
     double payoffShiftPlus, payoffShiftMinus;
-    PnlVect *diffShift = pnl_vect_create(opt_->size_);
-    PnlMat *shiftPlus = pnl_mat_create(opt_->size_, opt_->size_);
-    PnlMat *shiftMinus = pnl_mat_create(opt_->size_, opt_->size_);
+    PnlVect *diffShift = pnl_vect_create_from_zero(opt_->size_);
+    PnlMat *shiftPlus = pnl_mat_create_from_zero(opt_->size_, opt_->size_);
+    PnlMat *shiftMinus = pnl_mat_create_from_zero(opt_->size_, opt_->size_);
     for (int j = 0; j < delta->size; j++) {
         pnl_vect_set(delta, j, 0);
     }
@@ -70,7 +70,7 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
     }
 
     // Calcul des deltas
-    PnlVect *lastRow = pnl_vect_create(opt_->size_);
+    PnlVect *lastRow = pnl_vect_create_from_zero(opt_->size_);
     pnl_mat_get_row(lastRow, past, past->m - 1);
 
     pnl_vect_mult_scalar(delta, commonFactor / nbSamples_);
@@ -85,7 +85,7 @@ void MonteCarlo::delta(const PnlMat *past, double t, PnlVect *delta, PnlVect *st
         currentAsset = GET(lastRow, i);
         currentDelta = GET(delta, i);
         tmp = tmp * pow(commonFactor, 2) / (pow(currentAsset, 2) * nbSamples_) - pow(currentDelta, 2);
-        pnl_vect_set(std_dev, i, sqrt(tmp / nbSamples_));
+        pnl_vect_set(std_dev, i, sqrt(abs(tmp/ nbSamples_)));
     }
 
     // std::cout << "Delta  : " << GET(delta, 0) << "; Delta  stddev : " << GET(std_dev, 0) << std::endl;

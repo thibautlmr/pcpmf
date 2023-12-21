@@ -20,12 +20,12 @@ class Program
         Handler handler = new(computationUtilities, marketDataCurrDate);
         List<OutputData> outputDatas = new();
         handler.AddOutputData(outputDatas);
-        for (int t = 1; t < 110; t++)
+        for (int t = 1; t < dates.Count; t++)
         {
             handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[t]);
             if (computationUtilities.RebalancingTime(t))
             {
-                computationUtilities.UpdateGetPriceAndDeltasAsyncParameters(dates[t], t, ref isMonitoringDate, ref elapsedTime, past);
+                computationUtilities.UpdateGetPriceAndDeltasAsyncParameters(dates[t], t, ref isMonitoringDate, ref elapsedTime, ref past);
                 priceAndDeltaInfo = await GrpcClientUtil.GetPriceAndDeltasAsync(serverAddress, isMonitoringDate, elapsedTime, past);
                 handler.ComputationUtilities.Pricer = priceAndDeltaInfo;
                 handler.MarketDataCurrDate = dataUtilities.GetDataFeedForOneDate(dates[t]);

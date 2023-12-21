@@ -8,7 +8,7 @@
     0.5
   ],
   "Strikes": [
-    120
+    105
   ],
   "DomesticInterestRate": 0.01,
   "RelativeFiniteDifferenceStep": 0.1,

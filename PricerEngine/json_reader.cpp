@@ -13,7 +13,7 @@ void from_json(const nlohmann::json &j, PnlMat *&mat) {
     std::vector<std::vector<double>> stl_m = j.get<std::vector<std::vector<double>>>();
     int nLines = stl_m.size();
     if (nLines == 0) {
-        mat = pnl_mat_create(0, 0);
+        mat = pnl_mat_create_from_zero(0, 0);
         return;
     }
     int nColumns = stl_m[0].size();
@@ -24,7 +24,7 @@ void from_json(const nlohmann::json &j, PnlMat *&mat) {
             return;
         }
     }
-    mat = pnl_mat_create(nLines, nColumns);
+    mat = pnl_mat_create_from_zero(nLines, nColumns);
     int m = 0;
     for (auto row : stl_m) {
         pnl_mat_set_row_from_ptr(mat, row.data(), m);
